@@ -1,5 +1,19 @@
-canvas {
+body {
+  display: flex;
+  justify-content: center;
+}
+body .canvas-wrapper {
+  position: relative;
+  width: 640px;
+}
+body .canvas-wrapper #can-viewport {
   border: 2px solid lightblue;
+  position: absolute;
+  top: 0%;
+}
+body .canvas-wrapper #can-player {
+  position: absolute;
+  top: 0%;
 }
 
 /*# sourceMappingURL=styles.css.map */
