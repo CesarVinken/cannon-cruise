@@ -3,6 +3,11 @@ function GameAsset(asset) {
   this.height = asset.height;
 
   this.img = img[asset.name]; //img reference
+
+  this.pos = {
+    x: 0,
+    y: 0
+  };
 }
 
 GameAsset.prototype.draw = function() {

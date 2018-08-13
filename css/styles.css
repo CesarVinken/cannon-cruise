@@ -6,7 +6,7 @@ body .canvas-wrapper {
   position: relative;
   width: 640px;
 }
-body .canvas-wrapper #can-viewport {
+body .canvas-wrapper #canvas {
   border: 2px solid lightblue;
   position: absolute;
   top: 0%;

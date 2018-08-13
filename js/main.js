@@ -1,4 +1,4 @@
-let canViewport = document.getElementById("can-viewport");
+let canViewport = document.getElementById("canvas");
 
 let seaTile = { width: canViewport.width, height: canViewport.height };
 
@@ -16,57 +16,24 @@ let player = {
   height: 70
 };
 
+let ship = {
+  name: "ship",
+  location: "./img/player.png",
+  width: 70,
+  height: 70
+};
+
 keyEvents = {
   rightPressed: false,
   leftPressed: false
 };
 
-let gameAssets = [sea, player];
+let gameAssets = [sea, player, ship];
 let backgrounds = [];
+let ships = [];
 
 initialiseGame(gameAssets);
 
-//loading all assets
-function initialiseGame(assets) {
-  document.onkeydown = keyDownHandler;
-  document.onkeyup = keyUpHandler;
-
-  for (let i = 0; i < assets.length; i++) {
-    let image = new Image();
-    let imageName = assets[i].name;
-    console.log("loading: " + imageName);
-    if (i !== assets.length - 1) {
-      image.onload = function() {
-        img[imageName] = this;
-        img.width = assets[i].width;
-        img.height = assets[i].height;
-      };
-    } else {
-      image.onload = function() {
-        img[imageName] = this;
-        img.width = assets[i].width;
-        img.height = assets[i].height;
-        createWorld(
-          canViewport.width,
-          canViewport.height,
-          seaTile.width,
-          seaTile.height
-        );
-      };
-    }
-    image.src = assets[i].location;
-  }
-}
-
-function createWorld() {
-  console.log("create world..");
-
-  //add sprites
-  setupBackground();
-
-  //start game
-  requestAnimationFrame(loop);
-}
 var roc = { x: 120, y: 120 };
 
 function loop() {
@@ -84,10 +51,20 @@ function loop() {
   );
 
   drawBackground();
-  ctx.fillRect(roc.x - 5, roc.y - 5, 10, 10);
-  sprites["player"].draw();
 
+  ctx.fillRect(roc.x - 5, roc.y - 5, 10, 10);
+
+  sprites["player"].draw();
   sprites["player"].update();
+
+  // ctx.restore();
+
+  // ctx.save();
+  //move ships
+  ships.forEach(ship => {
+    ship.draw();
+    ship.update();
+  });
 
   ctx.restore();
 
@@ -98,37 +75,6 @@ function drawBackground() {
   backgrounds.forEach(seaTile => {
     seaTile.draw();
   });
-}
-
-function setupBackground() {
-  sprites["seas"["1"]] = new Sea(sea, {
-    x: 0 - sea.width,
-    y: 0 - sea.height
-  });
-  sprites["seas"["2"]] = new Sea(sea, {
-    x: 0,
-    y: 0 - sea.height
-  });
-  sprites["seas"["3"]] = new Sea(sea, {
-    x: 0 + sea.width,
-    y: 0 - sea.height
-  });
-  sprites["seas"["4"]] = new Sea(sea, { x: 0 - sea.width, y: 0 });
-  sprites["seas"["5"]] = new Sea(sea, { x: 0, y: 0 });
-  sprites["seas"["6"]] = new Sea(sea, { x: 0 + sea.width, y: 0 });
-  sprites["seas"["7"]] = new Sea(sea, {
-    x: 0 - sea.width,
-    y: 0 + sea.height
-  });
-  sprites["seas"["8"]] = new Sea(sea, {
-    x: 0,
-    y: 0 + sea.height
-  });
-  sprites["seas"["9"]] = new Sea(sea, {
-    x: 0 + sea.width,
-    y: 0 + sea.height
-  });
-  sprites[player.name] = new Player(player);
 }
 
 function keyDownHandler(event) {
