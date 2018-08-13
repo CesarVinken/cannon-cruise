@@ -13,3 +13,6 @@ function Sea(asset, pos) {
 
   backgrounds.push(this);
 }
+
+Sea.prototype = Object.create(GameAsset.prototype);
+Sea.prototype.constructor = Sea;

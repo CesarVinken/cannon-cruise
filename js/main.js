@@ -2,7 +2,7 @@ let canViewport = document.getElementById("can-viewport");
 
 let seaTile = { width: canViewport.width, height: canViewport.height };
 
-let ctx_viewportCanvas = canViewport.getContext("2d");
+let ctx = canViewport.getContext("2d");
 
 let img = {};
 let sprites = {};
@@ -16,6 +16,11 @@ let player = {
   height: 70
 };
 
+keyEvents = {
+  rightPressed: false,
+  leftPressed: false
+};
+
 let gameAssets = [sea, player];
 let backgrounds = [];
 
@@ -23,6 +28,9 @@ initialiseGame(gameAssets);
 
 //loading all assets
 function initialiseGame(assets) {
+  document.onkeydown = keyDownHandler;
+  document.onkeyup = keyUpHandler;
+
   for (let i = 0; i < assets.length; i++) {
     let image = new Image();
     let imageName = assets[i].name;
@@ -59,22 +67,29 @@ function createWorld() {
   //start game
   requestAnimationFrame(loop);
 }
+var roc = { x: 120, y: 120 };
 
 function loop() {
-  ctx_viewportCanvas.clearRect(0, 0, canViewport.width, canViewport.height);
+  ctx.clearRect(0, 0, canViewport.width, canViewport.height);
 
-  drawBackground();
+  ctx.save();
 
-  console.log(
-    "Our current top left on the map: " +
-      screenTopLeft +
-      ", " +
-      screenTopRight +
-      "."
+  ctx.translate(
+    -sprites["player"].pos.x +
+      canViewport.width / 2 -
+      sprites["player"].width / 2,
+    -sprites["player"].pos.y +
+      canViewport.height / 2 -
+      sprites["player"].height / 2
   );
 
-  sprites["player"].update();
+  drawBackground();
+  ctx.fillRect(roc.x - 5, roc.y - 5, 10, 10);
   sprites["player"].draw();
+
+  sprites["player"].update();
+
+  ctx.restore();
 
   requestAnimationFrame(loop);
 }
@@ -114,4 +129,20 @@ function setupBackground() {
     y: 0 + sea.height
   });
   sprites[player.name] = new Player(player);
+}
+
+function keyDownHandler(event) {
+  if (event.keyCode == 39) {
+    keyEvents.rightPressed = true;
+  } else if (event.keyCode == 37) {
+    keyEvents.leftPressed = true;
+  }
+}
+
+function keyUpHandler(event) {
+  if (event.keyCode == 39) {
+    keyEvents.rightPressed = false;
+  } else if (event.keyCode == 37) {
+    keyEvents.leftPressed = false;
+  }
 }
