@@ -1,33 +1,23 @@
 let canViewport = document.getElementById("can-viewport");
-let canPlayer = document.getElementById("can-player");
 
-let canWorld = createElement("canvas", {
-  width: 1280,
-  height: 1280
-});
-
-let seaTile = { width: 64, height: 64 };
+let seaTile = { width: canViewport.width, height: canViewport.height };
 
 let ctx_viewportCanvas = canViewport.getContext("2d");
-let ctx_playerCanvas = canPlayer.getContext("2d");
-let ctx_worldCanvas = canWorld.getContext("2d");
-
-let screenTopLeft = canWorld.width / 2 - canViewport.width / 2;
-let screenTopRight = canWorld.height / 2 - canViewport.height / 2;
 
 let img = {};
 let sprites = {};
 
 //list of assets as objects
-let sea = { name: "sea", location: "./img/sea.jpg", width: 64, height: 64 };
+let sea = { name: "sea", location: "./img/sea.jpg", width: 640, height: 640 };
 let player = {
   name: "player",
   location: "./img/player.png",
-  width: 40,
-  height: 40
+  width: 70,
+  height: 70
 };
 
 let gameAssets = [sea, player];
+let backgrounds = [];
 
 initialiseGame(gameAssets);
 
@@ -49,8 +39,8 @@ function initialiseGame(assets) {
         img.width = assets[i].width;
         img.height = assets[i].height;
         createWorld(
-          canWorld.width,
-          canWorld.height,
+          canViewport.width,
+          canViewport.height,
           seaTile.width,
           seaTile.height
         );
@@ -60,45 +50,27 @@ function initialiseGame(assets) {
   }
 }
 
-function createWorld(numTileWidth, numTileHeight, tWidth, tHeight) {
+function createWorld() {
   console.log("create world..");
-  for (let i = 0, len = numTileHeight; i < len; i++) {
-    for (let k = 0, len2 = numTileWidth; k < len2; k++) {
-      let x = k * tWidth;
-      let y = i * tHeight;
-      let image = img["sea"];
-      ctx_worldCanvas.drawImage(image, x, y, tWidth, tHeight);
-    }
-  }
-  //add player as sprite
-  addSprite(player);
+
+  //add sprites
+  setupBackground();
 
   //start game
   requestAnimationFrame(loop);
 }
 
-/* This is the 'viewport' itself btw. Just read it ou loud, helps when you want to understand what's going on */
 function loop() {
   ctx_viewportCanvas.clearRect(0, 0, canViewport.width, canViewport.height);
+
+  drawBackground();
+
   console.log(
     "Our current top left on the map: " +
       screenTopLeft +
       ", " +
       screenTopRight +
       "."
-  );
-  //Update player sprite position
-
-  ctx_viewportCanvas.drawImage(
-    canWorld,
-    canViewport.width,
-    canViewport.height,
-    canViewport.width,
-    canViewport.height,
-    0,
-    0,
-    canViewport.width,
-    canViewport.height
   );
 
   sprites["player"].update();
@@ -107,6 +79,39 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-function addSprite(asset) {
-  sprites[asset.name] = new Sprite(asset);
+function drawBackground() {
+  backgrounds.forEach(seaTile => {
+    seaTile.draw();
+  });
+}
+
+function setupBackground() {
+  sprites["seas"["1"]] = new Sea(sea, {
+    x: 0 - sea.width,
+    y: 0 - sea.height
+  });
+  sprites["seas"["2"]] = new Sea(sea, {
+    x: 0,
+    y: 0 - sea.height
+  });
+  sprites["seas"["3"]] = new Sea(sea, {
+    x: 0 + sea.width,
+    y: 0 - sea.height
+  });
+  sprites["seas"["4"]] = new Sea(sea, { x: 0 - sea.width, y: 0 });
+  sprites["seas"["5"]] = new Sea(sea, { x: 0, y: 0 });
+  sprites["seas"["6"]] = new Sea(sea, { x: 0 + sea.width, y: 0 });
+  sprites["seas"["7"]] = new Sea(sea, {
+    x: 0 - sea.width,
+    y: 0 + sea.height
+  });
+  sprites["seas"["8"]] = new Sea(sea, {
+    x: 0,
+    y: 0 + sea.height
+  });
+  sprites["seas"["9"]] = new Sea(sea, {
+    x: 0 + sea.width,
+    y: 0 + sea.height
+  });
+  sprites[player.name] = new Player(player);
 }

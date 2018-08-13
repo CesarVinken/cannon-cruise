@@ -11,9 +11,5 @@ body .canvas-wrapper #can-viewport {
   position: absolute;
   top: 0%;
 }
-body .canvas-wrapper #can-player {
-  position: absolute;
-  top: 0%;
-}
 
 /*# sourceMappingURL=styles.css.map */
