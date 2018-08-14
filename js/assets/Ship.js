@@ -1,7 +1,7 @@
 function Ship(asset) {
   GameAsset.call(this, asset);
   this.speed = 1;
-  this.rotation = 0;
+  this.distanceToPlayer;
 }
 Ship.prototype = Object.create(GameAsset.prototype);
 Ship.prototype.constructor = Ship;
@@ -207,11 +207,11 @@ Ship.prototype.move = function() {
 
 Ship.prototype.shipTooFarAway = function() {
   //check if ship is not too far away from the player
-  let distance = Math.hypot(
+  distanceToPlayer = Math.hypot(
     this.pos.x - sprites.player.pos.x,
     this.pos.y - sprites.player.pos.y
   );
-  return distance > 700;
+  return distanceToPlayer > 700;
 };
 
 Ship.prototype.remove = function(index) {

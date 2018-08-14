@@ -13,7 +13,8 @@ let currentMapUpperY;
 
 keyEvents = {
   rightPressed: false,
-  leftPressed: false
+  leftPressed: false,
+  spacePressed: false
 };
 
 let gameAssets = {
@@ -34,10 +35,17 @@ let gameAssets = {
     location: "./img/player.png",
     width: 70,
     height: 70
+  },
+  cannonball: {
+    name: "cannonball",
+    location: "./img/player.png",
+    width: 20,
+    height: 20
   }
 };
 let backgrounds = [];
 let ships = [];
+let cannonballs = [];
 //console.log(gameAssets.sea[0].name);
 initialiseGame();
 
@@ -71,6 +79,11 @@ function loop() {
       ship.draw();
       ship.update();
     }
+  });
+
+  cannonballs.forEach(cannonball => {
+    cannonball.draw();
+    cannonball.update();
   });
 
   ctx.restore();
@@ -149,6 +162,8 @@ function keyDownHandler(event) {
     keyEvents.rightPressed = true;
   } else if (event.keyCode == 37) {
     keyEvents.leftPressed = true;
+  } else if (event.keyCode == 32) {
+    keyEvents.spacePressed = true;
   }
 }
 
@@ -157,5 +172,7 @@ function keyUpHandler(event) {
     keyEvents.rightPressed = false;
   } else if (event.keyCode == 37) {
     keyEvents.leftPressed = false;
+  } else if (event.keyCode == 32) {
+    keyEvents.spacePressed = false;
   }
 }

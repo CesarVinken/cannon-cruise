@@ -1,6 +1,5 @@
 function Player(asset) {
   Ship.call(this, asset);
-  //   this.speed = 0;
   this.rotation = -Math.PI / 2;
 
   //the player starts off in the middle
@@ -15,6 +14,11 @@ Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
   this.move();
+
+  if (keyEvents.spacePressed) {
+    this.fire();
+    keyEvents.spacePressed = false;
+  }
 };
 
 Player.prototype.rotate = function() {
@@ -54,3 +58,20 @@ Player.prototype.draw = function() {
 
   ctx.restore();
 };
+
+Player.prototype.fire = function() {
+  let cannonball = new Cannonball(gameAssets.cannonball, this);
+  cannonball.create();
+};
+
+// Player.prototype.findClosestShip = function() {
+//   let closestShip;
+//   ships.forEach(ship => {
+//     if (!closestShip) {
+//       closestShip = ship;
+//     }
+//     if (ship.distanceToPlayer < closestShip.distanceToPlayer)
+//       closestShip = ship;
+//   });
+//   return closestShip;
+// };
