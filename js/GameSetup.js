@@ -1,31 +1,27 @@
-function initialiseGame(assets) {
+function initialiseGame() {
   document.onkeydown = keyDownHandler;
   document.onkeyup = keyUpHandler;
 
-  for (let i = 0; i < assets.length; i++) {
-    let image = new Image();
-    console.log("loading: " + assets[i].name);
+  for (let asset in gameAssets) {
+    gameAssets[asset].img = new Image();
 
-    assets[i].img = image;
-    image.onload = function() {
-      if (i === assets.length - 1) {
-        createWorld(
-          canViewport.width,
-          canViewport.height,
-          seaTile.width,
-          seaTile.height
-        );
-      }
-    };
-    image.src = assets[i].location;
+    gameAssets[asset].img.src = gameAssets[asset].location;
   }
+
+  createWorld(
+    canViewport.width,
+    canViewport.height,
+    seaTile.width,
+    seaTile.height
+  );
 }
 
 function createWorld() {
   console.log("create world..");
   setupBackground();
-  setupShips(2);
   setupPlayer();
+  setupShipsInViewport(4);
+  setupShipsOutsideViewport(4);
 
   //starts game
   requestAnimationFrame(loop);
@@ -33,6 +29,7 @@ function createWorld() {
 
 //creates all sea tiles surrounding the player
 function setupBackground() {
+  let sea = gameAssets.sea;
   currentMapUpperX = -sea.width;
   currentMapUpperY = -sea.height;
 
@@ -65,15 +62,22 @@ function setupBackground() {
   });
 }
 
-function setupShips(number) {
+function setupShipsInViewport(number) {
   for (i = 0; i < number; i++) {
-    let s = new Ship(ship);
-    sprites[ship.name + i] = s;
+    let s = new Ship(gameAssets.ship);
     s.setRandomLocationInViewport();
     s.create();
   }
 }
 
+function setupShipsOutsideViewport(number) {
+  for (i = 0; i < number; i++) {
+    let s = new Ship(gameAssets.ship);
+    s.setRandomLocationOutsideViewport();
+    s.create();
+  }
+}
+
 function setupPlayer() {
-  sprites[player.name] = new Player(player);
+  sprites[gameAssets.player.name] = new Player(gameAssets.player);
 }

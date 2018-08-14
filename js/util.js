@@ -25,43 +25,35 @@ function getViewport() {
   return {
     topLeft: {
       x:
-        sprites["player"].pos.x -
-        canViewport.width / 2 -
-        sprites["player"].width / 2,
+        sprites.player.pos.x - canViewport.width / 2 - sprites.player.width / 2,
       y:
-        sprites["player"].pos.y -
+        sprites.player.pos.y -
         canViewport.height / 2 -
-        sprites["player"].height / 2
+        sprites.player.height / 2
     },
     topRight: {
       x:
-        sprites["player"].pos.x +
-        canViewport.width / 2 -
-        sprites["player"].width / 2,
+        sprites.player.pos.x + canViewport.width / 2 - sprites.player.width / 2,
       y:
-        sprites["player"].pos.y -
+        sprites.player.pos.y -
         canViewport.height / 2 -
-        sprites["player"].height / 2
+        sprites.player.height / 2
     },
     bottomLeft: {
       x:
-        sprites["player"].pos.x -
-        canViewport.width / 2 -
-        sprites["player"].width / 2,
+        sprites.player.pos.x - canViewport.width / 2 - sprites.player.width / 2,
       y:
-        sprites["player"].pos.y +
+        sprites.player.pos.y +
         canViewport.height / 2 -
-        sprites["player"].height / 2
+        sprites.player.height / 2
     },
     bottomRight: {
       x:
-        sprites["player"].pos.x +
-        canViewport.width / 2 -
-        sprites["player"].width / 2,
+        sprites.player.pos.x + canViewport.width / 2 - sprites.player.width / 2,
       y:
-        sprites["player"].pos.y +
+        sprites.player.pos.y +
         canViewport.height / 2 -
-        sprites["player"].height / 2
+        sprites.player.height / 2
     }
   };
 }

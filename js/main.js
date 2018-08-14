@@ -12,31 +12,50 @@ let currentMapUpperX;
 let currentMapUpperY;
 
 //list of assets as objects
-let sea = { name: "sea", location: "./img/sea.jpg", width: 640, height: 640 };
-let player = {
-  name: "player",
-  location: "./img/player.png",
-  width: 70,
-  height: 70
-};
+// let sea = { name: "sea", location: "./img/sea.jpg", width: 640, height: 640 };
+// let player = {
+//   name: "player",
+//   location: "./img/player.png",
+//   width: 70,
+//   height: 70
+// };
 
-let ship = {
-  name: "ship",
-  location: "./img/player.png",
-  width: 70,
-  height: 70
-};
+// let ship = {
+//   name: "ship",
+//   location: "./img/player.png",
+//   width: 70,
+//   height: 70
+// };
 
 keyEvents = {
   rightPressed: false,
   leftPressed: false
 };
 
-let gameAssets = [sea, player, ship];
+let gameAssets = {
+  sea: {
+    name: "sea",
+    location: "./img/sea.jpg",
+    width: 640,
+    height: 640
+  },
+  player: {
+    name: "player",
+    location: "./img/player.png",
+    width: 70,
+    height: 70
+  },
+  ship: {
+    name: "ship",
+    location: "./img/player.png",
+    width: 70,
+    height: 70
+  }
+};
 let backgrounds = [];
 let ships = [];
-
-initialiseGame(gameAssets);
+//console.log(gameAssets.sea[0].name);
+initialiseGame();
 
 var roc = { x: 120, y: 120 };
 
@@ -62,8 +81,10 @@ function loop() {
   sprites["player"].update();
 
   //move ships
-  ships.forEach(ship => {
-    if (ship.checkShipDeletion()) {
+  ships.forEach((ship, index) => {
+    if (ship.shipTooFarAway()) {
+      ship.remove(index);
+      setupShipsOutsideViewport(1);
       //remove ship
     } else {
       ship.draw();
@@ -79,7 +100,7 @@ function loop() {
 function drawBackground() {
   if (
     sprites.player.pos.y <
-    currentMapUpperY + sea.height / 2 + sprites.player.height
+    currentMapUpperY + gameAssets.sea.height / 2 + sprites.player.height
   ) {
     //draw three sea tiles at the top
     backgrounds = backgrounds.sort(function(a, b) {
@@ -87,54 +108,54 @@ function drawBackground() {
       if (a.pos.y > b.pos.y) return 1;
       return 0;
     });
-    currentMapUpperY -= sea.height;
-    backgrounds[6].pos.y -= sea.height * 3;
-    backgrounds[7].pos.y -= sea.height * 3;
-    backgrounds[8].pos.y -= sea.height * 3;
+    currentMapUpperY -= gameAssets.sea.height;
+    backgrounds[6].pos.y -= gameAssets.sea.height * 3;
+    backgrounds[7].pos.y -= gameAssets.sea.height * 3;
+    backgrounds[8].pos.y -= gameAssets.sea.height * 3;
   } else if (
     sprites.player.pos.y >
-    currentMapUpperY + sea.height * 2.5 - sprites.player.height
+    currentMapUpperY + gameAssets.sea.height * 2.5 - sprites.player.height
   ) {
     //draw three sea tiles at the bottom
-    currentMapUpperY += sea.height;
+    currentMapUpperY += gameAssets.sea.height;
     backgrounds = backgrounds.sort(function(a, b) {
       if (a.pos.y < b.pos.y) return -1;
       if (a.pos.y > b.pos.y) return 1;
       return 0;
     });
-    backgrounds[0].pos.y += sea.height * 3;
-    backgrounds[1].pos.y += sea.height * 3;
-    backgrounds[2].pos.y += sea.height * 3;
+    backgrounds[0].pos.y += gameAssets.sea.height * 3;
+    backgrounds[1].pos.y += gameAssets.sea.height * 3;
+    backgrounds[2].pos.y += gameAssets.sea.height * 3;
   }
 
   if (
     sprites.player.pos.x <
-    currentMapUpperX + sea.width / 2 + sprites.player.width
+    currentMapUpperX + gameAssets.sea.width / 2 + sprites.player.width
   ) {
     //draw three sea tiles on the left
-    currentMapUpperX -= sea.width;
+    currentMapUpperX -= gameAssets.sea.width;
     backgrounds = backgrounds.sort(function(a, b) {
       if (a.pos.x < b.pos.x) return -1;
       if (a.pos.x > b.pos.x) return 1;
       return 0;
     });
-    backgrounds[6].pos.x -= sea.width * 3;
-    backgrounds[7].pos.x -= sea.width * 3;
-    backgrounds[8].pos.x -= sea.width * 3;
+    backgrounds[6].pos.x -= gameAssets.sea.width * 3;
+    backgrounds[7].pos.x -= gameAssets.sea.width * 3;
+    backgrounds[8].pos.x -= gameAssets.sea.width * 3;
   } else if (
     sprites.player.pos.x >
-    currentMapUpperX + sea.height * 2.5 - sprites.player.width
+    currentMapUpperX + gameAssets.sea.height * 2.5 - sprites.player.width
   ) {
     //draw three sea tiles on the right
-    currentMapUpperX += sea.width;
+    currentMapUpperX += gameAssets.sea.width;
     backgrounds = backgrounds.sort(function(a, b) {
       if (a.pos.x < b.pos.x) return -1;
       if (a.pos.x > b.pos.x) return 1;
       return 0;
     });
-    backgrounds[0].pos.x += sea.width * 3;
-    backgrounds[1].pos.x += sea.width * 3;
-    backgrounds[2].pos.x += sea.width * 3;
+    backgrounds[0].pos.x += gameAssets.sea.width * 3;
+    backgrounds[1].pos.x += gameAssets.sea.width * 3;
+    backgrounds[2].pos.x += gameAssets.sea.width * 3;
   }
 
   backgrounds.forEach(seaTile => {
