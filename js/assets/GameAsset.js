@@ -1,8 +1,7 @@
 function GameAsset(asset) {
   this.width = asset.width;
   this.height = asset.height;
-
-  this.img = img[asset.name]; //img reference
+  this.img = asset.img;
 
   this.pos = {
     x: 0,

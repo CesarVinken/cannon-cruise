@@ -4,14 +4,10 @@ function initialiseGame(assets) {
 
   for (let i = 0; i < assets.length; i++) {
     let image = new Image();
-    let imageName = assets[i].name;
-    console.log("loading: " + imageName);
+    console.log("loading: " + assets[i].name);
 
+    assets[i].img = image;
     image.onload = function() {
-      img[imageName] = this;
-      img.width = assets[i].width;
-      img.height = assets[i].height;
-
       if (i === assets.length - 1) {
         createWorld(
           canViewport.width,
@@ -37,6 +33,9 @@ function createWorld() {
 
 //creates all sea tiles surrounding the player
 function setupBackground() {
+  currentMapUpperX = -sea.width;
+  currentMapUpperY = -sea.height;
+
   sprites["seas"["1"]] = new Sea(sea, {
     x: 0 - sea.width,
     y: 0 - sea.height
@@ -70,7 +69,7 @@ function setupShips(number) {
   for (i = 0; i < number; i++) {
     let s = new Ship(ship);
     sprites[ship.name + i] = s;
-    s.setRandomLocation();
+    s.setRandomLocationInViewport();
     s.create();
   }
 }
