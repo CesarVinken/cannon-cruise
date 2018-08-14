@@ -3,12 +3,11 @@ function Ship(asset) {
   this.speed = 1;
   this.rotation = 0;
 }
-
 Ship.prototype = Object.create(GameAsset.prototype);
 Ship.prototype.constructor = Ship;
 
 Ship.prototype.create = function() {
-  console.log("ship created");
+  // console.log("ship created");
   ships.push(this);
 };
 
@@ -34,11 +33,12 @@ Ship.prototype.setRandomLocationOutsideViewport = function() {
   const maxPadding = 60;
 
   let randomDegrees = 0;
-  //   edgeOfViewport = 0;
-  //Math.random() * (max - min) + min; //formula for random in a range
-  switch (edgeOfViewport) {
+
+  switch (
+    edgeOfViewport //Math.random() * (max - min) + min; //formula for random in a range
+  ) {
     case 0: //ship is above viewport
-      console.log("ship is above viewport");
+      // console.log("ship is above viewport");
       randomDegrees = Math.floor(Math.random() * Math.floor(360 - 180) + 180);
       this.rotation = degreesToRadians(randomDegrees);
 
@@ -60,11 +60,11 @@ Ship.prototype.setRandomLocationOutsideViewport = function() {
             minPadding
         ) - this.height;
       this.rotation = -degreesToRadians(randomDegrees);
-      console.log("rotation: " + randomDegrees);
+      //  console.log("rotation: " + randomDegrees);
 
       break;
     case 1: //ship is under viewport
-      console.log("ship is under viewport");
+      // console.log("ship is under viewport");
       randomDegrees = Math.floor(Math.random() * Math.floor(180 - 0) + 0);
       this.rotation = degreesToRadians(randomDegrees);
 
@@ -87,11 +87,11 @@ Ship.prototype.setRandomLocationOutsideViewport = function() {
         ) + this.height;
 
       this.rotation = -degreesToRadians(randomDegrees);
-      console.log("rotation: " + randomDegrees);
+      //console.log("rotation: " + randomDegrees);
       break;
     //Math.random() * (max - min) + min;
     case 2: //ship is left of the viewport
-      console.log("ship is left viewport");
+      // console.log("ship is left viewport");
       randomDegrees = Math.floor(Math.random() * Math.floor(270 - 90) + 90);
       this.rotation = degreesToRadians(randomDegrees);
 
@@ -120,10 +120,10 @@ Ship.prototype.setRandomLocationOutsideViewport = function() {
       );
 
       this.rotation = -degreesToRadians(randomDegrees);
-      console.log("rotation: " + randomDegrees);
+      //console.log("rotation: " + randomDegrees);
       break;
     case 3: //ship is right of the viewport
-      console.log("ship is right viewport");
+      // console.log("ship is right viewport");
       randomDegrees = Math.floor(Math.random() * Math.floor(180 - 0) + 0);
       if (randomDegrees > 90) randomDegrees += 180;
       this.rotation = degreesToRadians(randomDegrees);
@@ -151,7 +151,7 @@ Ship.prototype.setRandomLocationOutsideViewport = function() {
           minPadding
       );
       this.rotation = -degreesToRadians(randomDegrees);
-      console.log("rotation: " + randomDegrees);
+      //console.log("rotation: " + randomDegrees);
       break;
     default:
       console.log("unknown value : " + edgeOfViewport);
@@ -177,12 +177,30 @@ Ship.prototype.draw = function() {
 
   this.rotate();
 
+  if (debug) {
+    ctx.save();
+    ctx.fillStyle = "brown";
+    ctx.globalAlpha = 0.2;
+    ctx.fillRect(
+      this.pos.x,
+      this.pos.y + this.height / 4 - 1,
+      this.width,
+      this.height / 2
+    );
+    ctx.restore();
+  }
   ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
 
   ctx.restore();
 };
 
 Ship.prototype.move = function() {
+  if (this.checkCollision()) {
+    this.forceRotate();
+    this.pos.x -= this.speed * Math.cos(this.rotation);
+    this.pos.y -= this.speed * Math.sin(this.rotation);
+    return;
+  }
   this.pos.x += this.speed * Math.cos(this.rotation);
   this.pos.y += this.speed * Math.sin(this.rotation);
 };
@@ -190,8 +208,8 @@ Ship.prototype.move = function() {
 Ship.prototype.shipTooFarAway = function() {
   //check if ship is not too far away from the player
   let distance = Math.hypot(
-    this.pos.x - sprites["player"].pos.x,
-    this.pos.y - sprites["player"].pos.y
+    this.pos.x - sprites.player.pos.x,
+    this.pos.y - sprites.player.pos.y
   );
   return distance > 700;
 };
@@ -200,9 +218,33 @@ Ship.prototype.remove = function(index) {
   ships.splice(index, 1);
 };
 
-// Ship.prototype.spawnRandomShip = function() {
-//   console.log("spawn new ship");
-// //  let s = new Ship(gameAssets.ship);
-// //   s.setRandomLocationOutsideViewport();
-//   s.create();
-// };
+Ship.prototype.checkCollision = function() {
+  let collision = false;
+  ships.forEach(ship => {
+    if (
+      this.pos.x + this.width / 4 < ship.pos.x + ship.width - ship.width / 4 &&
+      this.pos.x + this.width - this.width / 4 > ship.pos.x + ship.width / 4 &&
+      this.pos.y < ship.pos.y + ship.height &&
+      this.pos.y + this.height > ship.pos.y &&
+      this !== ship
+    ) {
+      //   this.pos.x -= (this.speed / 2) * Math.cos(this.rotation);
+      //    this.pos.y -= (this.speed / 2) * Math.sin(this.rotation);
+      collision = true;
+    }
+  });
+  return collision;
+};
+
+Ship.prototype.forceRotate = function() {
+  ctx.save();
+  ctx.translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
+  this.rotation += 0.01;
+  ctx.rotate(this.rotation);
+
+  //   ctx.translate(
+  //     -(this.pos.x + this.width / 2),
+  //     -(this.pos.y + this.height / 2)
+  //   );
+  ctx.restore();
+};

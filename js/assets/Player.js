@@ -30,13 +30,17 @@ Player.prototype.draw = function() {
   ctx.save();
 
   this.rotate();
-  //console.log(" why am I undefined? " + this.img);
 
   if (debug) {
     ctx.save();
     ctx.fillStyle = "black";
     ctx.globalAlpha = 0.2;
-    ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+    ctx.fillRect(
+      -this.width / 2,
+      -this.height / 4 - 1,
+      this.width,
+      this.height / 2
+    );
     ctx.restore();
   }
 

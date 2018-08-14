@@ -11,22 +11,6 @@ let debug = false;
 let currentMapUpperX;
 let currentMapUpperY;
 
-//list of assets as objects
-// let sea = { name: "sea", location: "./img/sea.jpg", width: 640, height: 640 };
-// let player = {
-//   name: "player",
-//   location: "./img/player.png",
-//   width: 70,
-//   height: 70
-// };
-
-// let ship = {
-//   name: "ship",
-//   location: "./img/player.png",
-//   width: 70,
-//   height: 70
-// };
-
 keyEvents = {
   rightPressed: false,
   leftPressed: false
@@ -65,20 +49,17 @@ function loop() {
   ctx.save();
   // console.log(getViewport());
   ctx.translate(
-    -sprites["player"].pos.x +
-      canViewport.width / 2 -
-      sprites["player"].width / 2,
-    -sprites["player"].pos.y +
-      canViewport.height / 2 -
-      sprites["player"].height / 2
+    -sprites.player.pos.x + canViewport.width / 2 - sprites.player.width / 2,
+    -sprites.player.pos.y + canViewport.height / 2 - sprites.player.height / 2
   );
 
   drawBackground();
 
   ctx.fillRect(roc.x - 5, roc.y - 5, 10, 10);
 
-  sprites["player"].draw();
-  sprites["player"].update();
+  sprites.player.draw();
+  sprites.player.update();
+  // sprites.player.checkCollision();
 
   //move ships
   ships.forEach((ship, index) => {
