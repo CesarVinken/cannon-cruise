@@ -55,8 +55,6 @@ Cannonball.prototype.update = function() {
   if (this.hitShip) {
     cannonballs.forEach((ball, index) => {
       if (ball == this) {
-        console.log(this.shootingDirection);
-
         let pos1 = {
           x:
             this.pos.x -

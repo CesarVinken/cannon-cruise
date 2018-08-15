@@ -329,12 +329,21 @@ Ship.prototype.forceRotate = function(angles) {
 Ship.prototype.receiveDamage = function(index) {
   this.health--;
   if (this.health <= 0) {
-    let smokeCloud = new Smoke(gameAssets.smoke, this.pos);
-    smokeCloud.create();
-    let shipwreck = new Shipwreck(gameAssets.shipwreck, this.pos);
-    shipwreck.create();
-    this.remove(index);
+    this.sinkShip();
   }
+};
+
+Ship.prototype.sinkShip = function() {
+  ships.forEach((ship, index) => {
+    if (this === ship) this.remove(index);
+  });
+  let smokeCloud = new Smoke(gameAssets.smoke, this.pos);
+  smokeCloud.create();
+  let shipwreck = new Shipwreck(gameAssets.shipwreck, this.pos);
+  shipwreck.create();
+  let chestPos = getChestPos(this.pos);
+  let chest = new Chest(gameAssets.chest, chestPos);
+  chest.create();
 };
 
 Ship.prototype.changeRoute = function() {
@@ -363,3 +372,12 @@ Ship.prototype.changeRoute = function() {
     50
   );
 };
+
+function getChestPos(pos) {
+  randomX = Math.floor(Math.random() * Math.floor(1));
+  if (randomX === 0) randomX = -1;
+
+  randomY = Math.floor(Math.random() * Math.floor(1));
+  if (randomY === 0) randomY = -1;
+  return { x: pos.x + randomX * 40, y: pos.y + randomY * 40 };
+}

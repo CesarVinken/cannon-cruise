@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 body {
   display: flex;
   justify-content: center;
@@ -8,6 +12,18 @@ body {
       border: 2px solid lightblue;
       position: absolute;
       top: 0%;
+    }
+    #score {
+      font-family: "Lobster", cursive;
+      font-size: 2rem;
+      color: brown;
+      position: absolute;
+      margin-top: 20px;
+      right: 10%;
+      transition: all;
+    }
+    .golden-letter {
+      color: gold;
     }
   }
 }

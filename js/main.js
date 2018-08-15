@@ -57,6 +57,12 @@ let gameAssets = {
     location: "./img/shipwreck.png",
     width: 87,
     height: 52
+  },
+  chest: {
+    name: "chest",
+    location: "./img/chest.png",
+    width: 239,
+    height: 191
   }
 };
 let backgrounds = [];
@@ -65,6 +71,7 @@ let cannonballs = [];
 let explosions = [];
 let smokeClouds = [];
 let shipwrecks = [];
+let chests = [];
 
 initialiseGame();
 
@@ -85,12 +92,9 @@ function loop() {
 
   //move ships
   ships.forEach((ship, index) => {
-    //  if (ship === sprites.player) return;
-
     if (ship.shipTooFarAway()) {
       ship.remove(index);
       setupShipsOutsideViewport(1);
-      //remove ship
     } else {
       ship.draw();
       ship.update();
@@ -113,6 +117,13 @@ function loop() {
   shipwrecks.forEach(shipwreck => {
     shipwreck.draw();
   });
+
+  chests.forEach(chest => {
+    chest.draw();
+    chest.update();
+  });
+
+  displayScore();
 
   ctx.restore();
 
