@@ -247,10 +247,9 @@ Ship.prototype.drawFrontTriangle = function() {
 Ship.prototype.move = function() {
   let checkShipsInFrontRes = this.checkShipsInFront();
   if (checkShipsInFrontRes === "left") {
-    this.forceRotate(2);
-    console.log("left");
+    this.forceRotate(3);
   } else if (checkShipsInFrontRes === "right") {
-    this.forceRotate(-2);
+    this.forceRotate(-3);
   }
 
   // if (false && this.checkCollision()) {
@@ -285,9 +284,13 @@ Ship.prototype.remove = function(index) {
 // - "left" if there is a ship on the left
 // - "right" if there is a ship on the right
 Ship.prototype.checkShipsInFront = function() {
-  for (let i = 0; i < ships.length; i++) {
-    const ship = ships[i];
-    if (this === ship) return;
+  let allShips = ships.slice();
+  allShips.push(sprites.player);
+
+  for (let i = 0; i < allShips.length; i++) {
+    const ship = allShips[i];
+
+    if (this === ship) continue;
     let vector = {
       x: ship.getCenter().x - this.getCenter().x,
       y: ship.getCenter().y - this.getCenter().y
@@ -314,7 +317,7 @@ Ship.prototype.checkShipsInFront = function() {
         ctx.stroke();
         ctx.strokeStyle = "black";
       }
-      return angleDiff > 0 ? "right" : "right";
+      return angleDiff > 0 ? "right" : "left";
     }
   }
 };

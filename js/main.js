@@ -6,7 +6,7 @@ let ctx = canViewport.getContext("2d");
 
 let sprites = {};
 
-let debug = false;
+let debug = true;
 
 let leftPressed = new KeyEvent();
 let rightPressed = new KeyEvent();
@@ -63,7 +63,7 @@ function loop() {
 
   //move ships
   ships.forEach((ship, index) => {
-    if (ship === sprites.player) return;
+    //  if (ship === sprites.player) return;
 
     if (ship.shipTooFarAway()) {
       ship.remove(index);

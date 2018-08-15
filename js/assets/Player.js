@@ -9,7 +9,7 @@ function Player(asset) {
     y: canViewport.height / 2 + this.height / 2
   };
 
-  //  ships.push(this);
+  // ships.push(this);
 }
 
 Player.prototype = Object.create(Ship.prototype);
@@ -35,6 +35,8 @@ Player.prototype.rotate = function() {
 
 Player.prototype.draw = function() {
   ctx.save();
+
+  if (debug) this.drawFrontTriangle();
 
   this.rotate();
 
