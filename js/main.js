@@ -6,11 +6,12 @@ let ctx = canViewport.getContext("2d");
 
 let sprites = {};
 
-let debug = true;
+let debug = false;
 
 let leftPressed = new KeyEvent();
 let rightPressed = new KeyEvent();
-let spacePressed = new KeyEvent();
+let aPressed = new KeyEvent();
+let dPressed = new KeyEvent();
 
 let gameAssets = {
   sea: {
@@ -35,7 +36,7 @@ let gameAssets = {
   },
   cannonball: {
     name: "cannonball",
-    location: "./img/player.png",
+    location: "./img/cannonball.png",
     width: 20,
     height: 20
   }
@@ -90,10 +91,15 @@ function keyDownHandler(event) {
     rightPressed.keyPressed = true;
   } else if (event.keyCode == 37) {
     leftPressed.keyPressed = true;
-  } else if (event.keyCode == 32) {
-    if (spacePressed.available) {
-      spacePressed.keyPressed = true;
-      spacePressed.cooldown();
+  } else if (event.keyCode == 65) {
+    if (aPressed.available) {
+      aPressed.keyPressed = true;
+      aPressed.cooldown();
+    }
+  } else if (event.keyCode == 68) {
+    if (dPressed.available) {
+      dPressed.keyPressed = true;
+      dPressed.cooldown();
     }
   }
 }
@@ -103,7 +109,9 @@ function keyUpHandler(event) {
     rightPressed.keyPressed = false;
   } else if (event.keyCode == 37) {
     leftPressed.keyPressed = false;
-  } else if (event.keyCode == 32) {
-    spacePressed.keyPressed = false;
+  } else if (event.keyCode == 65) {
+    aPressed.keyPressed = false;
+  } else if (event.keyCode == 68) {
+    dPressed.keyPressed = false;
   }
 }

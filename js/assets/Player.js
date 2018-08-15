@@ -1,8 +1,8 @@
 function Player(asset) {
   Ship.call(this, asset);
   this.rotation = -Math.PI / 2;
-  this.speed *= 1.1;
-
+  // this.speed *= 1.1;
+  this.speed = 1;
   //the player is in the middle
   this.pos = {
     x: canViewport.width / 2 + this.width / 2,
@@ -18,9 +18,14 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function() {
   this.move();
 
-  if (spacePressed.keyPressed) {
-    this.fire();
-    spacePressed.keyPressed = false;
+  if (aPressed.keyPressed) {
+    this.fire("left");
+    aPressed.keyPressed = false;
+  }
+
+  if (dPressed.keyPressed) {
+    this.fire("right");
+    dPressed.keyPressed = false;
   }
 };
 
@@ -64,8 +69,12 @@ Player.prototype.draw = function() {
   ctx.restore();
 };
 
-Player.prototype.fire = function() {
-  let cannonball = new Cannonball(gameAssets.cannonball, this);
+Player.prototype.fire = function(shootingDirection) {
+  let cannonball = new Cannonball(
+    gameAssets.cannonball,
+    this,
+    shootingDirection
+  );
   cannonball.create();
 };
 

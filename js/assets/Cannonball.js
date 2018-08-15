@@ -1,11 +1,13 @@
-function Cannonball(asset, parentShip) {
+function Cannonball(asset, parentShip, shootingDirection) {
   GameAsset.call(this, asset);
 
-  this.speed = 6;
+  this.speed = 10;
   this.parentShip = parentShip;
   this.hitShip = false;
-  this.width = 15;
-  this.height = 15;
+  this.width = 10;
+  this.height = 10;
+  this.rotation = this.parentShip.rotation;
+  this.shootingDirection = shootingDirection;
 
   this.pos = {
     x: sprites.player.pos.x + sprites.player.width / 2,
@@ -44,11 +46,34 @@ Cannonball.prototype.update = function() {
 
 Cannonball.prototype.draw = function() {
   ctx.save();
-  ctx.fillStyle = "black";
-  ctx.beginPath();
-  ctx.arc(this.pos.x, this.pos.y, this.width, 0, 2 * Math.PI);
-  ctx.closePath();
-  ctx.fill();
+  // ctx.fillStyle = "black";
+  // ctx.beginPath();
+  // ctx.arc(this.pos.x, this.pos.y, this.width, 0, 2 * Math.PI);
+  // ctx.closePath();
+  // ctx.fill();
+
+  ctx.drawImage(
+    this.img,
+    this.pos.x - this.parentShip.width / 8 - Math.cos(this.rotation) * 12,
+    this.pos.y - Math.sin(this.rotation) * 12,
+    this.width,
+    this.height
+  );
+  ctx.drawImage(
+    this.img,
+    this.pos.x - this.parentShip.width / 8,
+    this.pos.y,
+    this.width,
+    this.height
+  );
+  ctx.drawImage(
+    this.img,
+    this.pos.x - this.parentShip.width / 8 + Math.cos(this.rotation) * 12,
+    this.pos.y + Math.sin(this.rotation) * 12,
+    this.width,
+    this.height
+  );
+
   ctx.restore();
 };
 
@@ -57,8 +82,13 @@ Cannonball.prototype.destroy = function(index) {
 };
 
 Cannonball.prototype.move = function() {
-  this.pos.x += this.speed * Math.cos(this.parentShip.rotation + Math.PI / 2);
-  this.pos.y += this.speed * Math.sin(this.parentShip.rotation + Math.PI / 2);
+  if (this.shootingDirection === "left") {
+    this.pos.x -= this.speed * Math.cos(this.rotation + Math.PI / 2);
+    this.pos.y -= this.speed * Math.sin(this.rotation + Math.PI / 2);
+  } else if (this.shootingDirection === "right") {
+    this.pos.x += this.speed * Math.cos(this.rotation + Math.PI / 2);
+    this.pos.y += this.speed * Math.sin(this.rotation + Math.PI / 2);
+  }
 };
 
 Cannonball.prototype.checkHit = function() {
