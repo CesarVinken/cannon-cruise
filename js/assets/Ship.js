@@ -7,6 +7,7 @@ function Ship(asset) {
   this.lengthVision = 160;
   this.angleVision = Math.PI / 4;
 }
+
 Ship.prototype = Object.create(GameAsset.prototype);
 Ship.prototype.constructor = Ship;
 
@@ -252,16 +253,8 @@ Ship.prototype.move = function() {
     this.forceRotate(-3);
   }
 
-  // if (false && this.checkCollision()) {
-  //   //handle ship movement in case of collision
-  //   this.forceRotate(2);
-  //   this.pos.x -= this.speed * Math.cos(this.rotation);
-  //   this.pos.y -= this.speed * Math.sin(this.rotation);
-  //   return;
-  // } else {
   this.pos.x += this.speed * Math.cos(this.rotation);
   this.pos.y += this.speed * Math.sin(this.rotation);
-  //}
 };
 
 Ship.prototype.shipTooFarAway = function() {
@@ -322,24 +315,6 @@ Ship.prototype.checkShipsInFront = function() {
   }
 };
 
-// Ship.prototype.checkCollision = function() {
-//   let collision = false;
-//   ships.forEach(ship => {
-//     if (
-//       this.pos.x + this.width / 4 < ship.pos.x + ship.width - ship.width / 4 &&
-//       this.pos.x + this.width - this.width / 4 > ship.pos.x + ship.width / 4 &&
-//       this.pos.y < ship.pos.y + ship.height &&
-//       this.pos.y + this.height > ship.pos.y &&
-//       this !== ship
-//     ) {
-//       //   this.pos.x -= (this.speed / 2) * Math.cos(this.rotation);
-//       //    this.pos.y -= (this.speed / 2) * Math.sin(this.rotation);
-//       collision = true;
-//     }
-//   });
-//   return collision;
-// };
-
 Ship.prototype.forceRotate = function(angles) {
   ctx.save();
   ctx.translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
@@ -354,6 +329,10 @@ Ship.prototype.forceRotate = function(angles) {
 Ship.prototype.receiveDamage = function(index) {
   this.health--;
   if (this.health <= 0) {
+    let smokeCloud = new Smoke(gameAssets.smoke, this.pos);
+    smokeCloud.create();
+    let shipwreck = new Shipwreck(gameAssets.shipwreck, this.pos);
+    shipwreck.create();
     this.remove(index);
   }
 };
@@ -363,20 +342,20 @@ Ship.prototype.changeRoute = function() {
   let ultimateAngle = Math.floor(Math.random() * Math.floor(260)) - 130;
   let turningSpeed = Math.floor((Math.random() * Math.floor(12 - 6) + 6) / 10);
   let changedAngle = 0;
-  let changingRoute = setInterval(
+  this.changingRoute = setInterval(
     function() {
       if (ultimateAngle >= 0) {
         this.forceRotate(turningSpeed);
         changedAngle += turningSpeed;
         if (changedAngle >= ultimateAngle) {
-          clearInterval(changingRoute);
+          clearInterval(this.changingRoute);
           this.isChangingRoute = false;
         }
       } else {
         this.forceRotate(turningSpeed);
         changedAngle -= turningSpeed;
         if (changedAngle <= ultimateAngle) {
-          clearInterval(changingRoute);
+          clearInterval(this.changingRoute);
           this.isChangingRoute = false;
         }
       }

@@ -39,11 +39,32 @@ let gameAssets = {
     location: "./img/cannonball.png",
     width: 20,
     height: 20
+  },
+  explosion: {
+    name: "cannonball",
+    location: "./img/explosion.png",
+    width: 20,
+    height: 20
+  },
+  smoke: {
+    name: "smoke",
+    location: "./img/smoke.png",
+    width: 80,
+    height: 80
+  },
+  shipwreck: {
+    name: "shipwreck",
+    location: "./img/shipwreck.png",
+    width: 87,
+    height: 52
   }
 };
 let backgrounds = [];
 let ships = [];
 let cannonballs = [];
+let explosions = [];
+let smokeClouds = [];
+let shipwrecks = [];
 
 initialiseGame();
 
@@ -79,6 +100,18 @@ function loop() {
   cannonballs.forEach(cannonball => {
     cannonball.draw();
     cannonball.update();
+  });
+
+  explosions.forEach(explosion => {
+    explosion.draw();
+  });
+
+  smokeClouds.forEach(smokeCloud => {
+    smokeCloud.draw();
+  });
+
+  shipwrecks.forEach(shipwreck => {
+    shipwreck.draw();
   });
 
   ctx.restore();

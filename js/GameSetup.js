@@ -20,8 +20,8 @@ function createWorld() {
   console.log("create world..");
   setupBackground();
   setupPlayer();
-  setupShipsInViewport(2);
-  setupShipsOutsideViewport(0);
+  setupShipsInViewport(4);
+  setupShipsOutsideViewport(4);
 
   //starts game
   requestAnimationFrame(loop);
