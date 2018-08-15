@@ -2,6 +2,10 @@ function Ship(asset) {
   GameAsset.call(this, asset);
   this.speed = 1;
   this.distanceToPlayer;
+  this.health = asset.health;
+  this.isChangingRoute = false;
+  this.lengthVision = 160;
+  this.angleVision = Math.PI / 4;
 }
 Ship.prototype = Object.create(GameAsset.prototype);
 Ship.prototype.constructor = Ship;
@@ -9,6 +13,19 @@ Ship.prototype.constructor = Ship;
 Ship.prototype.create = function() {
   // console.log("ship created");
   ships.push(this);
+
+  this.checkRoute = setInterval(
+    function() {
+      if (!this.isChangingRoute) {
+        let rand = Math.floor(Math.random() * Math.floor(3));
+        if (rand === 0) {
+          this.changeRoute();
+          this.isChangingRoute = true;
+        }
+      }
+    }.bind(this),
+    5000
+  );
 };
 
 Ship.prototype.update = function() {
@@ -175,12 +192,14 @@ Ship.prototype.rotate = function() {
 Ship.prototype.draw = function() {
   ctx.save();
 
+  if (debug) this.drawFrontTriangle();
+
   this.rotate();
 
   if (debug) {
     ctx.save();
-    ctx.fillStyle = "brown";
-    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = 0.3;
     ctx.fillRect(
       this.pos.x,
       this.pos.y + this.height / 4 - 1,
@@ -194,15 +213,56 @@ Ship.prototype.draw = function() {
   ctx.restore();
 };
 
+Ship.prototype.drawFrontTriangle = function() {
+  let center = this.getCenter();
+  let top = {
+    x: center.x + this.lengthVision * Math.cos(this.rotation),
+    y: center.y + this.lengthVision * Math.sin(this.rotation)
+  };
+  let right = {
+    x:
+      center.x + this.lengthVision * Math.cos(this.rotation + this.angleVision),
+    y: center.y + this.lengthVision * Math.sin(this.rotation + this.angleVision)
+  };
+  let left = {
+    x:
+      center.x + this.lengthVision * Math.cos(this.rotation - this.angleVision),
+    y: center.y + this.lengthVision * Math.sin(this.rotation - this.angleVision)
+  };
+
+  ctx.beginPath();
+  ctx.moveTo(center.x, center.y);
+  ctx.lineTo(left.x, left.y);
+  ctx.lineTo(top.x, top.y);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(center.x, center.y);
+  ctx.lineTo(right.x, right.y);
+  ctx.lineTo(top.x, top.y);
+  ctx.closePath();
+  ctx.stroke();
+};
+
 Ship.prototype.move = function() {
-  if (this.checkCollision()) {
-    this.forceRotate();
-    this.pos.x -= this.speed * Math.cos(this.rotation);
-    this.pos.y -= this.speed * Math.sin(this.rotation);
-    return;
+  let checkShipsInFrontRes = this.checkShipsInFront();
+  if (checkShipsInFrontRes === "left") {
+    this.forceRotate(2);
+    console.log("left");
+  } else if (checkShipsInFrontRes === "right") {
+    this.forceRotate(-2);
   }
+
+  // if (false && this.checkCollision()) {
+  //   //handle ship movement in case of collision
+  //   this.forceRotate(2);
+  //   this.pos.x -= this.speed * Math.cos(this.rotation);
+  //   this.pos.y -= this.speed * Math.sin(this.rotation);
+  //   return;
+  // } else {
   this.pos.x += this.speed * Math.cos(this.rotation);
   this.pos.y += this.speed * Math.sin(this.rotation);
+  //}
 };
 
 Ship.prototype.shipTooFarAway = function() {
@@ -216,35 +276,108 @@ Ship.prototype.shipTooFarAway = function() {
 
 Ship.prototype.remove = function(index) {
   ships.splice(index, 1);
+  clearInterval(this.checkRoute);
+  clearInterval(this.changingRoute);
 };
 
-Ship.prototype.checkCollision = function() {
-  let collision = false;
-  ships.forEach(ship => {
+// Returns
+// - undefined if no ship
+// - "left" if there is a ship on the left
+// - "right" if there is a ship on the right
+Ship.prototype.checkShipsInFront = function() {
+  for (let i = 0; i < ships.length; i++) {
+    const ship = ships[i];
+    if (this === ship) return;
+    let vector = {
+      x: ship.getCenter().x - this.getCenter().x,
+      y: ship.getCenter().y - this.getCenter().y
+    };
+    let vectorAngle = Math.atan2(vector.y, vector.x);
+
+    let angleDiff = vectorAngle - this.rotation; // In radians
+    if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+    else if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+
     if (
-      this.pos.x + this.width / 4 < ship.pos.x + ship.width - ship.width / 4 &&
-      this.pos.x + this.width - this.width / 4 > ship.pos.x + ship.width / 4 &&
-      this.pos.y < ship.pos.y + ship.height &&
-      this.pos.y + this.height > ship.pos.y &&
-      this !== ship
+      Math.hypot(vector.x, vector.y) < this.lengthVision &&
+      Math.abs(angleDiff) <= this.angleVision
     ) {
-      //   this.pos.x -= (this.speed / 2) * Math.cos(this.rotation);
-      //    this.pos.y -= (this.speed / 2) * Math.sin(this.rotation);
-      collision = true;
+      if (debug) {
+        ctx.strokeStyle = "red";
+        this.color = "red";
+        ctx.beginPath();
+        ctx.moveTo(this.getCenter().x, this.getCenter().y);
+        ctx.lineTo(
+          this.getCenter().x + vector.x,
+          this.getCenter().y + vector.y
+        );
+        ctx.stroke();
+        ctx.strokeStyle = "black";
+      }
+      return angleDiff > 0 ? "right" : "right";
     }
-  });
-  return collision;
+  }
 };
 
-Ship.prototype.forceRotate = function() {
+// Ship.prototype.checkCollision = function() {
+//   let collision = false;
+//   ships.forEach(ship => {
+//     if (
+//       this.pos.x + this.width / 4 < ship.pos.x + ship.width - ship.width / 4 &&
+//       this.pos.x + this.width - this.width / 4 > ship.pos.x + ship.width / 4 &&
+//       this.pos.y < ship.pos.y + ship.height &&
+//       this.pos.y + this.height > ship.pos.y &&
+//       this !== ship
+//     ) {
+//       //   this.pos.x -= (this.speed / 2) * Math.cos(this.rotation);
+//       //    this.pos.y -= (this.speed / 2) * Math.sin(this.rotation);
+//       collision = true;
+//     }
+//   });
+//   return collision;
+// };
+
+Ship.prototype.forceRotate = function(angles) {
   ctx.save();
   ctx.translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
-  this.rotation += 0.01;
+
+  //angles to radians
+  this.rotation += degreesToRadians(angles);
   ctx.rotate(this.rotation);
 
-  //   ctx.translate(
-  //     -(this.pos.x + this.width / 2),
-  //     -(this.pos.y + this.height / 2)
-  //   );
   ctx.restore();
+};
+
+Ship.prototype.receiveDamage = function(index) {
+  this.health--;
+  if (this.health <= 0) {
+    this.remove(index);
+  }
+};
+
+Ship.prototype.changeRoute = function() {
+  // console.log("change route! " + ultimateAngle + " degrees");
+  let ultimateAngle = Math.floor(Math.random() * Math.floor(260)) - 130;
+  let turningSpeed = Math.floor((Math.random() * Math.floor(12 - 6) + 6) / 10);
+  let changedAngle = 0;
+  let changingRoute = setInterval(
+    function() {
+      if (ultimateAngle >= 0) {
+        this.forceRotate(turningSpeed);
+        changedAngle += turningSpeed;
+        if (changedAngle >= ultimateAngle) {
+          clearInterval(changingRoute);
+          this.isChangingRoute = false;
+        }
+      } else {
+        this.forceRotate(turningSpeed);
+        changedAngle -= turningSpeed;
+        if (changedAngle <= ultimateAngle) {
+          clearInterval(changingRoute);
+          this.isChangingRoute = false;
+        }
+      }
+    }.bind(this),
+    50
+  );
 };

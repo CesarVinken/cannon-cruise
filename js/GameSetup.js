@@ -25,6 +25,7 @@ function createWorld() {
 
   //starts game
   requestAnimationFrame(loop);
+  checkMapPopulation(); //this loop checks regularly if there are enough ships in the game
 }
 
 //creates all sea tiles surrounding the player

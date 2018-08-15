@@ -14,14 +14,16 @@ function Cannonball(asset, parentShip) {
 
   Cannonball.prototype.create = function() {
     cannonballs.push(this);
-    let that = this;
-    setTimeout(function() {
-      cannonballs.forEach((ball, index) => {
-        if (ball == that) {
-          that.destroy(index);
-        }
-      });
-    }, 1000);
+    setTimeout(
+      function() {
+        cannonballs.forEach((ball, index) => {
+          if (ball == this) {
+            this.destroy(index);
+          }
+        });
+      }.bind(this),
+      1000
+    );
   };
 }
 
@@ -32,11 +34,12 @@ Cannonball.prototype.update = function() {
         this.destroy(index);
       }
     });
+  } else {
+    this.move();
+    // console.log("CLOSEST SHIP " + );
+    // this.checkHit(sprites.player.findClosestShip());
+    this.checkHit();
   }
-  this.move();
-  // console.log("CLOSEST SHIP " + );
-  // this.checkHit(sprites.player.findClosestShip());
-  this.checkHit();
 };
 
 Cannonball.prototype.draw = function() {
@@ -58,18 +61,20 @@ Cannonball.prototype.move = function() {
   this.pos.y += this.speed * Math.sin(this.parentShip.rotation + Math.PI / 2);
 };
 
-//Cannonball.prototype.checkHit = function(ship) {
 Cannonball.prototype.checkHit = function() {
-  let that = this;
-  ships.forEach(function(ship, index) {
-    if (
-      that.pos.x < ship.pos.x + ship.width - ship.width / 4 &&
-      that.pos.x + that.width > ship.pos.x + ship.width / 4 &&
-      that.pos.y < ship.pos.y + ship.height &&
-      that.pos.y + that.height > ship.pos.y
-    ) {
-      that.hitShip = true;
-      ship.remove(index);
-    }
-  });
+  ships.forEach(
+    function(ship, index) {
+      if (ship === sprites.player) return;
+
+      if (
+        this.pos.x < ship.pos.x + ship.width - ship.width / 4 &&
+        this.pos.x + this.width > ship.pos.x + ship.width / 4 &&
+        this.pos.y < ship.pos.y + ship.height &&
+        this.pos.y + this.height > ship.pos.y
+      ) {
+        this.hitShip = true;
+        ship.receiveDamage(index);
+      }
+    }.bind(this)
+  );
 };

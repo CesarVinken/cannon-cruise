@@ -1,12 +1,15 @@
 function Player(asset) {
   Ship.call(this, asset);
   this.rotation = -Math.PI / 2;
+  this.speed *= 1.1;
 
-  //the player starts off in the middle
+  //the player is in the middle
   this.pos = {
     x: canViewport.width / 2 + this.width / 2,
     y: canViewport.height / 2 + this.height / 2
   };
+
+  //  ships.push(this);
 }
 
 Player.prototype = Object.create(Ship.prototype);
@@ -15,17 +18,17 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function() {
   this.move();
 
-  if (keyEvents.spacePressed) {
+  if (spacePressed.keyPressed) {
     this.fire();
-    keyEvents.spacePressed = false;
+    spacePressed.keyPressed = false;
   }
 };
 
 Player.prototype.rotate = function() {
   ctx.translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
 
-  if (keyEvents.leftPressed) this.rotation -= 0.01;
-  else if (keyEvents.rightPressed) this.rotation += 0.01;
+  if (leftPressed.keyPressed) this.rotation -= 0.01;
+  else if (rightPressed.keyPressed) this.rotation += 0.01;
 
   ctx.rotate(this.rotation);
 };
