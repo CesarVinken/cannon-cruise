@@ -340,9 +340,10 @@ Ship.prototype.sinkShip = function() {
   smokeCloud.create();
   let shipwreck = new Shipwreck(gameAssets.shipwreck, this.pos);
   shipwreck.create();
-  let chestPos = getChestPos(this);
-  let chest = new Chest(gameAssets.chest, chestPos);
+  let chest = new Chest(gameAssets.chest, this);
   chest.create();
+  destroyedShips++;
+  handleSpawningChances();
 };
 
 //every once in a while there is a chance the ship will change course
@@ -371,15 +372,3 @@ Ship.prototype.changeRoute = function() {
     50
   );
 };
-
-function getChestPos(ship) {
-  randomX = Math.floor(Math.random() * Math.floor(2));
-  if (randomX === 0) randomX = -1;
-
-  randomY = Math.floor(Math.random() * Math.floor(2));
-  if (randomY === 0) randomY = -1;
-  return {
-    x: ship.pos.x + ship.width / 2 + randomX * 40,
-    y: ship.pos.y + ship.height / 2 + randomY * 40
-  };
-}
