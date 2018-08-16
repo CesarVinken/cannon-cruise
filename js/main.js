@@ -83,11 +83,14 @@ let smokeClouds = [];
 let shipwrecks = [];
 let chests = [];
 
-newGame();
-
+$("#start-screen button").click(function() {
+  newGame();
+  $("#start-screen").hide();
+});
 function newGame() {
-  setDefaultValues();
+  $(".canvas-wrapper").show();
 
+  setDefaultValues();
   initialiseGame();
   displayScore();
 }

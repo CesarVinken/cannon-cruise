@@ -8,9 +8,42 @@ $text-on-wood: rgb(68, 55, 41);
 
   // font-family: "Lobster", cursive;
 }
+
+button {
+  font-size: 1.8rem;
+  margin: 40px 0;
+  color: $text-on-wood;
+  padding: 14px 18px;
+  border: none;
+  background-color: transparent;
+  border: 2px solid $text-on-wood;
+  border-radius: 14px;
+  height: 70px;
+}
+button:hover {
+  color: goldenrod;
+}
+button:active {
+  color: gold;
+}
+
 body {
   display: flex;
   justify-content: center;
+  #start-screen {
+    background-image: url("../img/start-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    width: 100vh;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .canvas-wrapper {
     position: relative;
     width: 640px;
@@ -51,19 +84,16 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        #restart {
-          font-size: 1.8rem;
-          margin: 40px 0;
-          color: $text-on-wood;
-          padding: 14px 18px;
-          border: none;
-          background-color: transparent;
-          border: 2px solid $text-on-wood;
-          border-radius: 14px;
-        }
-        #restart:hover {
-          color: goldenrod;
-        }
+        // #restart {
+        //   font-size: 1.8rem;
+        //   margin: 40px 0;
+        //   color: $text-on-wood;
+        //   padding: 14px 18px;
+        //   border: none;
+        //   background-color: transparent;
+        //   border: 2px solid $text-on-wood;
+        //   border-radius: 14px;
+        // }
       }
     }
   }
