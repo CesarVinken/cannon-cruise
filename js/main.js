@@ -25,14 +25,24 @@ let gameAssets = {
     location: "./img/player.png",
     width: 70,
     height: 70,
-    health: 4
+    health: 4,
+    speed: 1.1
   },
   ship: {
     name: "ship",
     location: "./img/player.png",
     width: 70,
     height: 70,
-    health: 2
+    health: 2,
+    speed: 1
+  },
+  warship: {
+    name: "warship",
+    location: "./img/warship.png",
+    width: 110,
+    height: 110,
+    health: 3,
+    speed: 0.9
   },
   cannonball: {
     name: "cannonball",
@@ -92,7 +102,7 @@ function loop() {
 
   //move ships
   ships.forEach((ship, index) => {
-    if (ship.shipTooFarAway()) {
+    if (ship.distanceToPlayer > 700) {
       ship.remove(index);
       setupShipsOutsideViewport(1);
     } else {

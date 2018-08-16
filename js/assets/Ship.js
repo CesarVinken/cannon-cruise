@@ -1,6 +1,6 @@
 function Ship(asset) {
   GameAsset.call(this, asset);
-  this.speed = 1;
+  this.speed = asset.speed;
   this.distanceToPlayer;
   this.health = asset.health;
   this.isChangingRoute = false;
@@ -31,6 +31,7 @@ Ship.prototype.create = function() {
 
 Ship.prototype.update = function() {
   this.move();
+  this.calcDistToPlayer();
 };
 
 //the ships can spawn anywhere within the viewport, facing any direction
@@ -257,13 +258,12 @@ Ship.prototype.move = function() {
   this.pos.y += this.speed * Math.sin(this.rotation);
 };
 
-Ship.prototype.shipTooFarAway = function() {
+Ship.prototype.calcDistToPlayer = function() {
   //check if ship is not too far away from the player
-  distanceToPlayer = Math.hypot(
+  this.distanceToPlayer = Math.hypot(
     this.pos.x - sprites.player.pos.x,
     this.pos.y - sprites.player.pos.y
   );
-  return distanceToPlayer > 700;
 };
 
 Ship.prototype.remove = function(index) {
@@ -341,14 +341,14 @@ Ship.prototype.sinkShip = function() {
   smokeCloud.create();
   let shipwreck = new Shipwreck(gameAssets.shipwreck, this.pos);
   shipwreck.create();
-  let chestPos = getChestPos(this.pos);
+  let chestPos = getChestPos(this);
   let chest = new Chest(gameAssets.chest, chestPos);
   chest.create();
 };
 
+//every once in a while there is a chance the ship will change course
 Ship.prototype.changeRoute = function() {
-  // console.log("change route! " + ultimateAngle + " degrees");
-  let ultimateAngle = Math.floor(Math.random() * Math.floor(260)) - 130;
+  let ultimateAngle = Math.floor(Math.random() * Math.floor(260)) - 130; //the no of degrees the ship will change
   let turningSpeed = Math.floor((Math.random() * Math.floor(12 - 6) + 6) / 10);
   let changedAngle = 0;
   this.changingRoute = setInterval(
@@ -373,11 +373,14 @@ Ship.prototype.changeRoute = function() {
   );
 };
 
-function getChestPos(pos) {
-  randomX = Math.floor(Math.random() * Math.floor(1));
+function getChestPos(ship) {
+  randomX = Math.floor(Math.random() * Math.floor(2));
   if (randomX === 0) randomX = -1;
 
-  randomY = Math.floor(Math.random() * Math.floor(1));
+  randomY = Math.floor(Math.random() * Math.floor(2));
   if (randomY === 0) randomY = -1;
-  return { x: pos.x + randomX * 40, y: pos.y + randomY * 40 };
+  return {
+    x: ship.pos.x + ship.width / 2 + randomX * 40,
+    y: ship.pos.y + ship.height / 2 + randomY * 40
+  };
 }

@@ -65,7 +65,7 @@ function setupBackground() {
 
 function setupShipsInViewport(number) {
   for (i = 0; i < number; i++) {
-    let s = new Ship(gameAssets.ship);
+    let s = chooseShipType();
     s.setRandomLocationInViewport();
     s.create();
   }
@@ -73,7 +73,7 @@ function setupShipsInViewport(number) {
 
 function setupShipsOutsideViewport(number) {
   for (i = 0; i < number; i++) {
-    let s = new Ship(gameAssets.ship);
+    let s = chooseShipType();
     s.setRandomLocationOutsideViewport();
     s.create();
   }

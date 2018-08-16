@@ -2,7 +2,6 @@ function Player(asset) {
   Ship.call(this, asset);
   this.rotation = -Math.PI / 2;
   this.speed *= 1.1;
-  this.speed = 1;
   //the player is in the middle
   this.pos = {
     x: canViewport.width / 2 + this.width / 2,
