@@ -12,8 +12,8 @@ function Cannonball(asset, parentShip, shootingDirection) {
   this.isFaded = false;
 
   this.pos = {
-    x: sprites.player.pos.x + sprites.player.width / 2,
-    y: sprites.player.pos.y + sprites.player.height / 2
+    x: parentShip.pos.x + parentShip.width / 2,
+    y: parentShip.pos.y + parentShip.height / 2
   };
 }
 Cannonball.prototype = Object.create(GameAsset.prototype);
@@ -80,7 +80,8 @@ Cannonball.prototype.update = function() {
     });
   } else {
     this.move();
-    this.checkHit();
+    if (this.parentShip === sprites.player) this.checkHitNPC();
+    else this.checkHitPlayer();
   }
 };
 
@@ -128,10 +129,10 @@ Cannonball.prototype.move = function() {
   }
 };
 
-Cannonball.prototype.checkHit = function() {
+Cannonball.prototype.checkHitNPC = function() {
   ships.forEach(
-    function(ship, index) {
-      if (ship === sprites.player) return;
+    function(ship) {
+      if (ship === this.parentShip) return;
 
       if (
         this.pos.x < ship.pos.x + ship.width - ship.width / 4 &&
@@ -140,8 +141,21 @@ Cannonball.prototype.checkHit = function() {
         this.pos.y + this.height > ship.pos.y
       ) {
         this.hitShip = true;
-        ship.receiveDamage(index);
+        ship.receiveDamage();
       }
     }.bind(this)
   );
+};
+
+Cannonball.prototype.checkHitPlayer = function() {
+  if (
+    this.pos.x <
+      sprites.player.pos.x + sprites.player.width - sprites.player.width / 4 &&
+    this.pos.x + this.width > sprites.player.pos.x + sprites.player.width / 4 &&
+    this.pos.y < sprites.player.pos.y + sprites.player.height &&
+    this.pos.y + this.height > sprites.player.pos.y
+  ) {
+    this.hitShip = true;
+    sprites.player.receiveDamage();
+  }
 };

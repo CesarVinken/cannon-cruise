@@ -106,11 +106,10 @@ Ship.prototype.setRandomLocationOutsideViewport = function() {
         ) + this.height;
 
       this.rotation = -degreesToRadians(randomDegrees);
-      //console.log("rotation: " + randomDegrees);
       break;
     //Math.random() * (max - min) + min;
     case 2: //ship is left of the viewport
-      // console.log("ship is left viewport");
+      // console.log("ship is left of viewport");
       randomDegrees = Math.floor(Math.random() * Math.floor(270 - 90) + 90);
       this.rotation = degreesToRadians(randomDegrees);
 
@@ -326,7 +325,7 @@ Ship.prototype.forceRotate = function(angles) {
   ctx.restore();
 };
 
-Ship.prototype.receiveDamage = function(index) {
+Ship.prototype.receiveDamage = function() {
   this.health--;
   if (this.health <= 0) {
     this.sinkShip();

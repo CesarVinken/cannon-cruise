@@ -1,7 +1,10 @@
 function Player(asset) {
-  Ship.call(this, asset);
+  Warship.call(this, asset);
   this.rotation = -Math.PI / 2;
-  this.speed *= 1.1;
+  this.speed = asset.speed;
+  this.health = asset.health;
+  this.canShoot = true;
+
   //the player is in the middle
   this.pos = {
     x: canViewport.width / 2 + this.width / 2,
@@ -9,20 +12,26 @@ function Player(asset) {
   };
 }
 
-Player.prototype = Object.create(Ship.prototype);
+Player.prototype = Object.create(Warship.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
   this.move();
 
   if (aPressed.keyPressed) {
-    this.fire("left");
-    aPressed.keyPressed = false;
+    if (this.canShoot) {
+      this.fire("left");
+      aPressed.keyPressed = false;
+      this.canShoot = false;
+    }
   }
 
   if (dPressed.keyPressed) {
-    this.fire("right");
-    dPressed.keyPressed = false;
+    if (this.canShoot) {
+      this.fire("right");
+      dPressed.keyPressed = false;
+      this.canShoot = false;
+    }
   }
 };
 
@@ -64,15 +73,6 @@ Player.prototype.draw = function() {
   );
 
   ctx.restore();
-};
-
-Player.prototype.fire = function(shootingDirection) {
-  let cannonball = new Cannonball(
-    gameAssets.cannonball,
-    this,
-    shootingDirection
-  );
-  cannonball.create();
 };
 
 // Player.prototype.findClosestShip = function() {

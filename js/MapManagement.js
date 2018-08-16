@@ -79,7 +79,7 @@ function checkMapPopulation() {
 }
 
 function chooseShipType() {
-  let warshipChance = 50; //everything below this number will be warship
+  let warshipChance = 30; //everything below this number will be warship
   random = Math.floor(Math.random() * Math.floor(100)); //50%
 
   if (random < warshipChance) {

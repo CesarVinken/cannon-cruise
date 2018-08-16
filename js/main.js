@@ -148,12 +148,12 @@ function keyDownHandler(event) {
   } else if (event.keyCode == 65) {
     if (aPressed.available) {
       aPressed.keyPressed = true;
-      aPressed.cooldown();
+      //   aPressed.cooldown();
     }
   } else if (event.keyCode == 68) {
     if (dPressed.available) {
       dPressed.keyPressed = true;
-      dPressed.cooldown();
+      // dPressed.cooldown();
     }
   }
 }
