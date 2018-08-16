@@ -157,5 +157,6 @@ Cannonball.prototype.checkHitPlayer = function() {
   ) {
     this.hitShip = true;
     sprites.player.receiveDamage();
+    displayHealth();
   }
 };

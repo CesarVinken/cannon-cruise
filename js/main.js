@@ -92,6 +92,7 @@ function newGame() {
 
   setDefaultValues();
   initialiseGame();
+  displayHealth();
   displayScore();
 }
 

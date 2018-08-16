@@ -19,7 +19,12 @@
     </div>
     <div class="canvas-wrapper" hidden>
         <canvas id="canvas" width="640px" height="640px"></canvas>
-        <h3 id="score">Score: 0</h3>
+        <div id="top-row">
+            <div id="health-container">
+
+            </div>
+            <h3 class="score">Score: 0</h3>
+        </div>
         <div id="game-over-wrapper">
         </div>
     </div>
@@ -37,8 +42,9 @@
     <script src="./js/assets/Shipwreck.js" type="text/javascript"></script>
     <script src="./js/assets/Chest.js" type="text/javascript"></script>
     <script src="./js/MapManagement.js" type="text/javascript"></script>
-    <script src="./js/Score.js" type="text/javascript"></script>
-    <script src="./js/GameOver.js" type="text/javascript"></script>
+    <script src="./js/UI/Score.js" type="text/javascript"></script>
+    <script src="./js/UI/HealthDisplay.js" type="text/javascript"></script>
+    <script src="./js/UI/GameOver.js" type="text/javascript"></script>
     <script src="./js/Gamesetup.js" type="text/javascript"></script>
     <script src="./js/Main.js" type="text/javascript"></script>
 </body>

@@ -53,18 +53,31 @@ body {
       position: absolute;
       top: 0%;
     }
-    #score {
-      font-family: "Lobster", cursive;
-      font-size: 2rem;
-      color: $text-on-wood;
+    #top-row {
+      display: flex;
+      justify-content: space-between;
       position: absolute;
-      margin-top: 20px;
-      right: 10%;
-      transition: all;
+      margin: 20px;
+      width: 90%;
+      #health-container {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        img {
+          height: 30px;
+          width: 30px;
+        }
+      }
+      .score {
+        font-family: "Lobster", cursive;
+        font-size: 2rem;
+        color: $text-on-wood;
+
+        //right: 10%;
+        transition: all 500ms ease-out;
+      }
     }
-    .golden-letter {
-      color: gold;
-    }
+
     .game-over-background {
       background-color: rgba(0, 0, 0, 0.3);
       width: 640px;
@@ -84,17 +97,12 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        // #restart {
-        //   font-size: 1.8rem;
-        //   margin: 40px 0;
-        //   color: $text-on-wood;
-        //   padding: 14px 18px;
-        //   border: none;
-        //   background-color: transparent;
-        //   border: 2px solid $text-on-wood;
-        //   border-radius: 14px;
-        // }
       }
     }
   }
+}
+
+.golden-letter {
+  color: gold !important;
+  transform: scale(1.3);
 }
