@@ -1,9 +1,9 @@
 let currentMapUpperX;
 let currentMapUpperY;
-let warshipSpawningChance = 90; //percentage chance a new ship will be a warship
+let warshipSpawningChance = 85; //percentage chance a new ship will be a warship
 let destroyedShips = 0;
 
-const maxShipPop = 10;
+const maxShipPop = 11;
 
 function drawBackground() {
   if (

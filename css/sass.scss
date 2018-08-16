@@ -5,7 +5,6 @@ $text-on-wood: rgb(68, 55, 41);
   padding: 0;
   //font-family: "Crimson Text", serif;
   font-family: "Patua One", cursive;
-
   // font-family: "Lobster", cursive;
 }
 
@@ -72,8 +71,6 @@ body {
         font-family: "Lobster", cursive;
         font-size: 2rem;
         color: $text-on-wood;
-
-        //right: 10%;
         transition: all 500ms ease-out;
       }
     }
@@ -85,7 +82,6 @@ body {
       position: absolute;
       #game-over {
         color: $text-on-wood;
-        font-size: 5rem;
         display: flex;
         justify-content: center;
         height: 500px;
@@ -97,6 +93,12 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
+        p {
+          font-size: 1.3;
+        }
+        h2 {
+          font-size: 5rem;
+        }
       }
     }
   }
