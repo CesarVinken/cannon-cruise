@@ -18,6 +18,14 @@ GameAsset.prototype.getCenter = function() {
   };
 };
 
+GameAsset.prototype.getBottomCenter = function() {
+  let center = this.getCenter();
+  return {
+    x: center.x - (Math.cos(this.rotation) * this.height) / 2,
+    y: center.y - (Math.sin(this.rotation) * this.height) / 2
+  };
+};
+
 GameAsset.prototype.draw = function() {
   ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
 };

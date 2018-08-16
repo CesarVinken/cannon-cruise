@@ -138,7 +138,6 @@ Ship.prototype.setRandomLocationOutsideViewport = function() {
       );
 
       this.rotation = -degreesToRadians(randomDegrees);
-      //console.log("rotation: " + randomDegrees);
       break;
     case 3: //ship is right of the viewport
       // console.log("ship is right viewport");
@@ -215,7 +214,7 @@ Ship.prototype.draw = function() {
 };
 
 Ship.prototype.drawFrontTriangle = function() {
-  let center = this.getCenter();
+  let center = this.getBottomCenter();
   let top = {
     x: center.x + this.lengthVision * Math.cos(this.rotation),
     y: center.y + this.lengthVision * Math.sin(this.rotation)
@@ -284,8 +283,8 @@ Ship.prototype.checkShipsInFront = function() {
 
     if (this === ship) continue;
     let vector = {
-      x: ship.getCenter().x - this.getCenter().x,
-      y: ship.getCenter().y - this.getCenter().y
+      x: ship.getCenter().x - this.getBottomCenter().x,
+      y: ship.getCenter().y - this.getBottomCenter().y
     };
     let vectorAngle = Math.atan2(vector.y, vector.x);
 
@@ -301,10 +300,10 @@ Ship.prototype.checkShipsInFront = function() {
         ctx.strokeStyle = "red";
         this.color = "red";
         ctx.beginPath();
-        ctx.moveTo(this.getCenter().x, this.getCenter().y);
+        ctx.moveTo(this.getBottomCenter().x, this.getBottomCenter().y);
         ctx.lineTo(
-          this.getCenter().x + vector.x,
-          this.getCenter().y + vector.y
+          this.getBottomCenter().x + vector.x,
+          this.getBottomCenter().y + vector.y
         );
         ctx.stroke();
         ctx.strokeStyle = "black";
@@ -333,17 +332,21 @@ Ship.prototype.receiveDamage = function() {
 };
 
 Ship.prototype.sinkShip = function() {
-  ships.forEach((ship, index) => {
-    if (this === ship) this.remove(index);
-  });
   let smokeCloud = new Smoke(gameAssets.smoke, this.pos);
   smokeCloud.create();
   let shipwreck = new Shipwreck(gameAssets.shipwreck, this.pos);
   shipwreck.create();
-  let chest = new Chest(gameAssets.chest, this);
-  chest.create();
-  destroyedShips++;
-  handleSpawningChances();
+  if (this !== sprites.player) {
+    ships.forEach((ship, index) => {
+      if (this === ship) this.remove(index);
+    });
+    let chest = new Chest(gameAssets.chest, this);
+    chest.create();
+    destroyedShips++;
+    handleSpawningChances();
+  } else {
+    sprites.player.sinkPlayer();
+  }
 };
 
 //every once in a while there is a chance the ship will change course

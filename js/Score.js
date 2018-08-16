@@ -9,4 +9,5 @@ function displayScore() {
 
 function increaseScore(gold) {
   playerScore += gold;
+  displayScore();
 }

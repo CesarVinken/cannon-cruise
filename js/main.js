@@ -83,7 +83,24 @@ let smokeClouds = [];
 let shipwrecks = [];
 let chests = [];
 
-initialiseGame();
+newGame();
+
+function newGame() {
+  setDefaultValues();
+
+  initialiseGame();
+  displayScore();
+}
+
+function setDefaultValues() {
+  backgrounds = [];
+  ships = [];
+  cannonballs = [];
+  explosions = [];
+  smokeClouds = [];
+  shipwrecks = [];
+  chests = [];
+}
 
 function loop() {
   ctx.clearRect(0, 0, canViewport.width, canViewport.height);
@@ -97,8 +114,10 @@ function loop() {
 
   drawBackground();
 
-  sprites.player.draw();
-  sprites.player.update();
+  if (!sprites.player.isDead) {
+    sprites.player.draw();
+    sprites.player.update();
+  }
 
   //move ships
   ships.forEach((ship, index) => {
@@ -133,8 +152,6 @@ function loop() {
     chest.update();
   });
 
-  displayScore();
-
   ctx.restore();
 
   requestAnimationFrame(loop);
@@ -153,7 +170,7 @@ function keyDownHandler(event) {
   } else if (event.keyCode == 68) {
     if (dPressed.available) {
       dPressed.keyPressed = true;
-      // dPressed.cooldown();
+      // dPressed.cßooldown();
     }
   }
 }

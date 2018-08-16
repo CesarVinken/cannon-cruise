@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "Patua One", cursive;
 }
 
 body {
@@ -19,7 +20,7 @@ body .canvas-wrapper #canvas {
 body .canvas-wrapper #score {
   font-family: "Lobster", cursive;
   font-size: 2rem;
-  color: brown;
+  color: #443729;
   position: absolute;
   margin-top: 20px;
   right: 10%;
@@ -27,6 +28,39 @@ body .canvas-wrapper #score {
 }
 body .canvas-wrapper .golden-letter {
   color: gold;
+}
+body .canvas-wrapper .game-over-background {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 640px;
+  height: 640px;
+  position: absolute;
+}
+body .canvas-wrapper .game-over-background #game-over {
+  color: #443729;
+  font-size: 5rem;
+  display: flex;
+  justify-content: center;
+  height: 500px;
+  align-items: center;
+  flex-direction: column;
+  margin: 40px;
+  background-image: url("../img/wooden-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+body .canvas-wrapper .game-over-background #game-over #restart {
+  font-size: 1.8rem;
+  margin: 40px 0;
+  color: #443729;
+  padding: 14px 18px;
+  border: none;
+  background-color: transparent;
+  border: 2px solid #443729;
+  border-radius: 14px;
+}
+body .canvas-wrapper .game-over-background #game-over #restart:hover {
+  color: goldenrod;
 }
 
 /*# sourceMappingURL=styles.css.map */

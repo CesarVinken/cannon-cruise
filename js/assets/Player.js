@@ -2,8 +2,10 @@ function Player(asset) {
   Warship.call(this, asset);
   this.rotation = -Math.PI / 2;
   this.speed = asset.speed;
-  this.health = asset.health;
+  // this.health = asset.health;
+  this.health = 1;
   this.canShoot = true;
+  this.isDead = false;
 
   //the player is in the middle
   this.pos = {
@@ -75,14 +77,7 @@ Player.prototype.draw = function() {
   ctx.restore();
 };
 
-// Player.prototype.findClosestShip = function() {
-//   let closestShip;
-//   ships.forEach(ship => {
-//     if (!closestShip) {
-//       closestShip = ship;
-//     }
-//     if (ship.distanceToPlayer < closestShip.distanceToPlayer)
-//       closestShip = ship;
-//   });
-//   return closestShip;
-// };
+Player.prototype.sinkPlayer = function() {
+  this.isDead = true;
+  gameOver();
+};

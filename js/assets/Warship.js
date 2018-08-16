@@ -11,7 +11,7 @@ Warship.prototype.constructor = Warship;
 Warship.prototype.update = function() {
   Ship.prototype.update.call(this);
 
-  if (this.distanceToPlayer < this.shootingRange) {
+  if (this.distanceToPlayer < this.shootingRange && !sprites.player.isDead) {
     let shootDirection = this.playerPosAngle();
     if (shootDirection && this.canShoot) {
       if (this.willShoot()) {
@@ -58,7 +58,6 @@ Warship.prototype.fire = function(shootingDirection) {
 };
 
 Warship.prototype.shotCooldown = function() {
-  console.log("cooldown");
   this.canShoot = false;
   setTimeout(
     function() {

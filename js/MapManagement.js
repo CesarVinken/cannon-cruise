@@ -1,6 +1,6 @@
 let currentMapUpperX;
 let currentMapUpperY;
-let warshipSpawningChance = 0; //percentage chance a new ship will be a warship
+let warshipSpawningChance = 90; //percentage chance a new ship will be a warship
 let destroyedShips = 0;
 
 const maxShipPop = 10;

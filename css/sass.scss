@@ -1,6 +1,12 @@
+$text-on-wood: rgb(68, 55, 41);
+
 * {
   margin: 0;
   padding: 0;
+  //font-family: "Crimson Text", serif;
+  font-family: "Patua One", cursive;
+
+  // font-family: "Lobster", cursive;
 }
 body {
   display: flex;
@@ -8,6 +14,7 @@ body {
   .canvas-wrapper {
     position: relative;
     width: 640px;
+
     #canvas {
       border: 2px solid lightblue;
       position: absolute;
@@ -16,7 +23,7 @@ body {
     #score {
       font-family: "Lobster", cursive;
       font-size: 2rem;
-      color: brown;
+      color: $text-on-wood;
       position: absolute;
       margin-top: 20px;
       right: 10%;
@@ -24,6 +31,40 @@ body {
     }
     .golden-letter {
       color: gold;
+    }
+    .game-over-background {
+      background-color: rgba(0, 0, 0, 0.3);
+      width: 640px;
+      height: 640px;
+      position: absolute;
+      #game-over {
+        color: $text-on-wood;
+        font-size: 5rem;
+        display: flex;
+        justify-content: center;
+        height: 500px;
+        align-items: center;
+        flex-direction: column;
+        margin: 40px;
+
+        background-image: url("../img/wooden-background.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        #restart {
+          font-size: 1.8rem;
+          margin: 40px 0;
+          color: $text-on-wood;
+          padding: 14px 18px;
+          border: none;
+          background-color: transparent;
+          border: 2px solid $text-on-wood;
+          border-radius: 14px;
+        }
+        #restart:hover {
+          color: goldenrod;
+        }
+      }
     }
   }
 }
