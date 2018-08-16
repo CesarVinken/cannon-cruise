@@ -8,6 +8,12 @@ $text-on-wood: rgb(68, 55, 41);
   // font-family: "Lobster", cursive;
 }
 
+h1 {
+  font-size: 4rem;
+  color: $text-on-wood;
+  padding-bottom: 60px;
+}
+
 button {
   font-size: 1.8rem;
   margin: 40px 0;
@@ -41,6 +47,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 
   .canvas-wrapper {

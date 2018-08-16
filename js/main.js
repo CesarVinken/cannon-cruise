@@ -28,19 +28,27 @@ let gameAssets = {
   },
   ship: {
     name: "ship",
-    location: "./img/player.png",
-    width: 70,
-    height: 70,
+    location: "./img/trade-vessel.png",
+    width: 74,
+    height: 74,
     health: 2,
     speed: 1
   },
   warship: {
     name: "warship",
     location: "./img/warship.png",
-    width: 110,
+    width: 130,
     height: 110,
     health: 3,
     speed: 0.9
+  },
+  warship2: {
+    name: "warship2",
+    location: "./img/warship2.png",
+    width: 200,
+    height: 75,
+    health: 4,
+    speed: 0.7
   },
   cannonball: {
     name: "cannonball",
@@ -65,6 +73,18 @@ let gameAssets = {
     location: "./img/shipwreck.png",
     width: 87,
     height: 52
+  },
+  shipwreck2: {
+    name: "shipwreck2",
+    location: "./img/shipwreck.png",
+    width: 100,
+    height: 65
+  },
+  shipwreck3: {
+    name: "shipwreck3",
+    location: "./img/shipwreck.png",
+    width: 160,
+    height: 100
   },
   chest: {
     name: "chest",
@@ -95,6 +115,7 @@ function newGame() {
   initialiseGame();
   displayHealth();
   displayScore();
+  // let text = new PirateText("AYEAYE");
 }
 
 function setDefaultValues() {
@@ -105,10 +126,13 @@ function setDefaultValues() {
   smokeClouds = [];
   shipwrecks = [];
   chests = [];
+  texts = [];
   sprites = {};
 
   playerScore = 0;
   destroyedShips = 0;
+  warshipSpawningChance = 5;
+  capitalShipSpawningChance = 0;
 }
 
 let gameLoop = function loop() {
@@ -161,6 +185,10 @@ let gameLoop = function loop() {
     chest.update();
   });
 
+  texts.forEach(text => {
+    text.draw();
+  });
+
   ctx.restore();
 
   requestedFrame = requestAnimationFrame(gameLoop);
@@ -174,12 +202,10 @@ function keyDownHandler(event) {
   } else if (event.keyCode == 65) {
     if (aPressed.available) {
       aPressed.keyPressed = true;
-      //   aPressed.cooldown();
     }
   } else if (event.keyCode == 68) {
     if (dPressed.available) {
       dPressed.keyPressed = true;
-      // dPressed.cßooldown();
     }
   }
 }

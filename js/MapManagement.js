@@ -1,6 +1,7 @@
 let currentMapUpperX;
 let currentMapUpperY;
 let warshipSpawningChance = 5; //percentage chance a new ship will be a warship
+let capitalShipSpawningChance = 0; //percentage chance that if a warship will appear it is a big one
 let destroyedShips = 0;
 
 const maxShipPop = 11;
@@ -81,18 +82,31 @@ function checkMapPopulation() {
 }
 
 function chooseShipType() {
-  random = Math.floor(Math.random() * Math.floor(100)); //50%
+  let random = Math.floor(Math.random() * Math.floor(100));
 
   if (random < warshipSpawningChance) {
-    return new Warship(gameAssets.warship);
+    random = Math.floor(Math.random() * Math.floor(100));
+    if (random < capitalShipSpawningChance) {
+      console.log("CREATE WARSHIP2");
+      return new Warship(gameAssets.warship2);
+    } else {
+      return new Warship(gameAssets.warship);
+    }
   } else {
     return new Ship(gameAssets.ship);
   }
 }
+
 function handleSpawningChances() {
-  if (destroyedShips >= 8) warshipSpawningChance = 95;
-  else if (destroyedShips >= 5) warshipSpawningChance = 70;
-  else if (destroyedShips >= 3) warshipSpawningChance = 40;
-  else if (destroyedShips >= 1) warshipSpawningChance = 25;
+  if (destroyedShips >= 8) {
+    warshipSpawningChance = 95;
+    capitalShipSpawningChance = 50;
+  } else if (destroyedShips >= 5) {
+    warshipSpawningChance = 70;
+    capitalShipSpawningChance = 20;
+  } else if (destroyedShips >= 3) {
+    warshipSpawningChance = 40;
+    capitalShipSpawningChance = 7;
+  } else if (destroyedShips >= 1) warshipSpawningChance = 25;
   else warshipSpawningChance = 5;
 }

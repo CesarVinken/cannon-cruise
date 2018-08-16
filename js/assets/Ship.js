@@ -334,7 +334,13 @@ Ship.prototype.receiveDamage = function() {
 Ship.prototype.sinkShip = function() {
   let smokeCloud = new Smoke(gameAssets.smoke, this.pos);
   smokeCloud.create();
-  let shipwreck = new Shipwreck(gameAssets.shipwreck, this.pos);
+
+  let shipwreckType;
+  if (this.name === "ship") shipwreckType = gameAssets.shipwreck;
+  else if (this.name === "warship") shipwreckType = gameAssets.shipwreck2;
+  else shipwreckType = gameAssets.shipwreck3;
+
+  let shipwreck = new Shipwreck(shipwreckType, this.pos);
   shipwreck.create();
   if (this !== sprites.player) {
     ships.forEach((ship, index) => {

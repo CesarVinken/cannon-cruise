@@ -61,6 +61,7 @@ Chest.prototype.pickUp = function() {
     if (chest == this) {
       this.destroy(index);
       console.log("coins!");
+      let text = new PirateText(randomReaction());
       increaseScore(this.goldValue);
     }
   });
@@ -86,3 +87,10 @@ Chest.prototype.setChestPos = function() {
   this.pos.y =
     this.parentShip.pos.y + this.parentShip.height / 2 + randomY * 40;
 };
+
+function randomReaction() {
+  let reactions = ["arr! gold!", "treasure!"];
+  let reaction =
+    reactions[Math.floor(Math.random() * Math.floor(reactions.length * 2))];
+  return reaction === undefined ? "" : reaction; //there is a good chance the reaction will be empty
+}

@@ -1,4 +1,5 @@
 function GameAsset(asset) {
+  this.name = asset.name;
   this.width = asset.width;
   this.height = asset.height;
   this.img = asset.img;

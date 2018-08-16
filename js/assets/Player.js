@@ -2,8 +2,8 @@ function Player(asset) {
   Warship.call(this, asset);
   this.rotation = -Math.PI / 2;
   this.speed = asset.speed;
-  // this.health = asset.health;
-  this.health = 1;
+  this.health = asset.health;
+  //this.health = 1;
   this.canShoot = true;
   this.isDead = false;
 

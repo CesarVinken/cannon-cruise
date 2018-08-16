@@ -4,6 +4,12 @@
   font-family: "Patua One", cursive;
 }
 
+h1 {
+  font-size: 4rem;
+  color: #443729;
+  padding-bottom: 60px;
+}
+
 button {
   font-size: 1.8rem;
   margin: 40px 0;
@@ -38,6 +44,7 @@ body #start-screen {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 body .canvas-wrapper {
   position: relative;
