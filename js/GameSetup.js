@@ -24,7 +24,7 @@ function createWorld() {
   setupShipsOutsideViewport(4);
 
   //starts game
-  requestAnimationFrame(loop);
+  requestAnimationFrame(gameLoop);
   checkMapPopulation(); //this loop checks regularly if there are enough ships in the game
 }
 

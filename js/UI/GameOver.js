@@ -19,6 +19,6 @@ function gameOver() {
 function restartGame() {
   $("#game-over-wrapper").removeClass("game-over-background");
   $("#game-over-wrapper").html("");
-
+  window.cancelAnimationFrame(requestedFrame);
   newGame();
 }

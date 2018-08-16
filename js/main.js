@@ -1,12 +1,10 @@
+let debug = false;
+
 let canViewport = document.getElementById("canvas");
 
 let seaTile = { width: canViewport.width, height: canViewport.height };
 
 let ctx = canViewport.getContext("2d");
-
-let sprites = {};
-
-let debug = false;
 
 let leftPressed = new KeyEvent();
 let rightPressed = new KeyEvent();
@@ -25,7 +23,7 @@ let gameAssets = {
     location: "./img/player.png",
     width: 70,
     height: 70,
-    health: 6,
+    health: 4,
     speed: 1.1
   },
   ship: {
@@ -83,6 +81,9 @@ let smokeClouds = [];
 let shipwrecks = [];
 let chests = [];
 
+let sprites = {};
+let requestedFrame;
+
 $("#start-screen button").click(function() {
   newGame();
   $("#start-screen").hide();
@@ -104,9 +105,13 @@ function setDefaultValues() {
   smokeClouds = [];
   shipwrecks = [];
   chests = [];
+  sprites = {};
+
+  playerScore = 0;
+  destroyedShips = 0;
 }
 
-function loop() {
+let gameLoop = function loop() {
   ctx.clearRect(0, 0, canViewport.width, canViewport.height);
 
   ctx.save();
@@ -158,8 +163,8 @@ function loop() {
 
   ctx.restore();
 
-  requestAnimationFrame(loop);
-}
+  requestedFrame = requestAnimationFrame(gameLoop);
+};
 
 function keyDownHandler(event) {
   if (event.keyCode == 39) {
