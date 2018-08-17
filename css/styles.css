@@ -35,7 +35,7 @@ body {
   justify-content: center;
 }
 body #start-screen {
-  background-image: url("../img/start-background.jpg");
+  background-image: url("../img/start-background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -93,7 +93,7 @@ body .canvas-wrapper .game-over-background #game-over {
   align-items: center;
   flex-direction: column;
   margin: 40px;
-  background-image: url("../img/wooden-background.png");
+  background-image: url("../img/wooden-background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

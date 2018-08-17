@@ -7,7 +7,6 @@ function Chest(asset, parentShip) {
   this.flasher;
   this.parentShip = parentShip;
   this.goldValue = parentShip.goldValue;
-  console.log(parentShip);
 }
 
 Chest.prototype = Object.create(GameAsset.prototype);
