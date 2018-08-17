@@ -33,3 +33,29 @@ PirateText.prototype.draw = function() {
     sprites.player.pos.y - this.yCounter
   );
 };
+
+function randomChestReaction() {
+  let reactions = [
+    "arr! booty!",
+    "treasure!",
+    "piles of gold!",
+    "their coffers are ours!"
+  ];
+  let reaction =
+    reactions[Math.floor(Math.random() * Math.floor(reactions.length * 2))];
+  return reaction === undefined ? "" : reaction; //there is a good chance the reaction will be empty
+}
+
+function randomSinkingReaction() {
+  let reactions = [
+    "to davy jones' locker! arr!",
+    "sent to the bottom of the sea!",
+    "scuttled them barque!",
+    "dead men tell no tales!",
+    "the galleon's sinking!",
+    "grappled them gunwalls!"
+  ];
+  let reaction =
+    reactions[Math.floor(Math.random() * Math.floor(reactions.length * 2.5))];
+  return reaction === undefined ? "" : reaction; //there is a good chance the reaction will be empty
+}

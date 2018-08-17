@@ -60,8 +60,8 @@ Chest.prototype.pickUp = function() {
   chests.forEach((chest, index) => {
     if (chest == this) {
       this.destroy(index);
-      console.log("coins!");
-      let text = new PirateText(randomReaction());
+
+      let text = new PirateText(randomChestReaction());
       increaseScore(this.goldValue);
     }
   });
@@ -87,10 +87,3 @@ Chest.prototype.setChestPos = function() {
   this.pos.y =
     this.parentShip.pos.y + this.parentShip.height / 2 + randomY * 40;
 };
-
-function randomReaction() {
-  let reactions = ["arr! booty!", "treasure!", "piles of gold!"];
-  let reaction =
-    reactions[Math.floor(Math.random() * Math.floor(reactions.length * 2))];
-  return reaction === undefined ? "" : reaction; //there is a good chance the reaction will be empty
-}

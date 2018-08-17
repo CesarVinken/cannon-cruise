@@ -338,9 +338,13 @@ Ship.prototype.sinkShip = function() {
 
   let shipwreckType;
   if (this.name === "ship") shipwreckType = gameAssets.shipwreck;
-  else if (this.name === "warship") shipwreckType = gameAssets.shipwreck2;
-  else shipwreckType = gameAssets.shipwreck3;
-
+  else if (this.name === "warship") {
+    shipwreckType = gameAssets.shipwreck2;
+    new PirateText(randomSinkingReaction());
+  } else {
+    shipwreckType = gameAssets.shipwreck3;
+    new PirateText(randomSinkingReaction());
+  }
   let shipwreck = new Shipwreck(shipwreckType, this.pos);
   shipwreck.create();
   if (this !== sprites.player) {
