@@ -14,13 +14,13 @@ let dPressed = new KeyEvent();
 let gameAssets = {
   sea: {
     name: "sea",
-    location: "img/sea.jpeg",
+    location: "sea.jpeg",
     width: 640,
     height: 640
   },
   player: {
     name: "player",
-    location: "img/player.jpeg",
+    location: "player.jpeg",
     width: 70,
     height: 70,
     health: 6,
@@ -28,7 +28,7 @@ let gameAssets = {
   },
   ship: {
     name: "ship",
-    location: "img/trade-vessel.jpeg",
+    location: "trade-vessel.jpeg",
     width: 74,
     height: 74,
     health: 2,
@@ -37,7 +37,7 @@ let gameAssets = {
   },
   warship: {
     name: "warship",
-    location: "img/warship.jpeg",
+    location: "warship.jpeg",
     width: 130,
     height: 110,
     health: 3,
@@ -46,7 +46,7 @@ let gameAssets = {
   },
   warship2: {
     name: "warship2",
-    location: "img/warship2.jpeg",
+    location: "warship2.jpeg",
     width: 200,
     height: 75,
     health: 4,
@@ -55,43 +55,43 @@ let gameAssets = {
   },
   cannonball: {
     name: "cannonball",
-    location: "img/cannonball.jpeg",
+    location: "cannonball.jpeg",
     width: 20,
     height: 20
   },
   explosion: {
     name: "cannonball",
-    location: "img/explosion.jpeg",
+    location: "explosion.jpeg",
     width: 20,
     height: 20
   },
   smoke: {
     name: "smoke",
-    location: "img/smoke.jpeg",
+    location: "smoke.jpeg",
     width: 80,
     height: 80
   },
   shipwreck: {
     name: "shipwreck",
-    location: "img/shipwreck.jpeg",
+    location: "shipwreck.jpeg",
     width: 87,
     height: 52
   },
   shipwreck2: {
     name: "shipwreck2",
-    location: "img/shipwreck.jpeg",
+    location: "shipwreck.jpeg",
     width: 100,
     height: 65
   },
   shipwreck3: {
     name: "shipwreck3",
-    location: "img/shipwreck.jpeg",
+    location: "shipwreck.jpeg",
     width: 160,
     height: 100
   },
   chest: {
     name: "chest",
-    location: "img/chest.jpeg",
+    location: "chest.jpeg",
     width: 239,
     height: 191
   }
