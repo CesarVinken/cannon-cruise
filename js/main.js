@@ -23,7 +23,7 @@ let gameAssets = {
     location: "./img/player.png",
     width: 70,
     height: 70,
-    health: 10,
+    health: 6,
     speed: 1.1
   },
   ship: {
