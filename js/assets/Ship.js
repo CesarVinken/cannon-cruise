@@ -6,6 +6,7 @@ function Ship(asset) {
   this.isChangingRoute = false;
   this.lengthVision = 160;
   this.angleVision = Math.PI / 4;
+  this.goldValue = asset.goldValue;
 }
 
 Ship.prototype = Object.create(GameAsset.prototype);

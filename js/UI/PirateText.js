@@ -8,6 +8,8 @@ function PirateText(text) {
   this.yCounter = 0;
   this.interval;
 
+  if (texts.length > 0) return;
+
   texts.push(this);
   setTimeout(
     function() {
@@ -23,7 +25,7 @@ PirateText.prototype.draw = function() {
   this.xCounter += 0.2;
   this.yCounter += 0.1;
   //ctx.font = "17px 'Patua One'";
-  ctx.font = "17px Lora";
+  ctx.font = "17px Bitter";
   ctx.fillStyle = "#D3D3D3";
   ctx.fillText(
     this.text,

@@ -40,8 +40,8 @@ Player.prototype.update = function() {
 Player.prototype.rotate = function() {
   ctx.translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
 
-  if (leftPressed.keyPressed) this.rotation -= 0.01;
-  else if (rightPressed.keyPressed) this.rotation += 0.01;
+  if (leftPressed.keyPressed) this.rotation -= 0.014;
+  else if (rightPressed.keyPressed) this.rotation += 0.014;
 
   ctx.rotate(this.rotation);
 };

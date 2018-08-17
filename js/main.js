@@ -23,7 +23,7 @@ let gameAssets = {
     location: "./img/player.png",
     width: 70,
     height: 70,
-    health: 4,
+    health: 10,
     speed: 1.1
   },
   ship: {
@@ -32,7 +32,8 @@ let gameAssets = {
     width: 74,
     height: 74,
     health: 2,
-    speed: 1
+    speed: 1,
+    goldValue: 10
   },
   warship: {
     name: "warship",
@@ -40,7 +41,8 @@ let gameAssets = {
     width: 130,
     height: 110,
     health: 3,
-    speed: 0.9
+    speed: 0.9,
+    goldValue: 15
   },
   warship2: {
     name: "warship2",
@@ -48,7 +50,8 @@ let gameAssets = {
     width: 200,
     height: 75,
     health: 4,
-    speed: 0.7
+    speed: 0.7,
+    goldValue: 30
   },
   cannonball: {
     name: "cannonball",
@@ -115,7 +118,6 @@ function newGame() {
   initialiseGame();
   displayHealth();
   displayScore();
-  // let text = new PirateText("AYEAYE");
 }
 
 function setDefaultValues() {

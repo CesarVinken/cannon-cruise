@@ -3,10 +3,11 @@ function Chest(asset, parentShip) {
 
   this.width = asset.width / 8;
   this.height = asset.height / 8;
-  this.goldValue = 10;
   this.isFlashing = false;
   this.flasher;
   this.parentShip = parentShip;
+  this.goldValue = parentShip.goldValue;
+  console.log(parentShip);
 }
 
 Chest.prototype = Object.create(GameAsset.prototype);
@@ -89,7 +90,7 @@ Chest.prototype.setChestPos = function() {
 };
 
 function randomReaction() {
-  let reactions = ["arr! gold!", "treasure!"];
+  let reactions = ["arr! booty!", "treasure!", "piles of gold!"];
   let reaction =
     reactions[Math.floor(Math.random() * Math.floor(reactions.length * 2))];
   return reaction === undefined ? "" : reaction; //there is a good chance the reaction will be empty
