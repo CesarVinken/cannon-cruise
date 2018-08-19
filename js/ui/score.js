@@ -7,10 +7,9 @@ function displayScore() {
 function increaseScore(gold) {
   playerScore += gold;
   displayScore();
-  console.log("score effect");
-  $(".score").addClass("golden-letter");
+  $(".score").attr("id", "golden-letter");
 
   setTimeout(() => {
-    $(".score").removeClass("golden-letter");
+    $(".score").removeAttr("id");
   }, 800);
 }

@@ -6,6 +6,11 @@ let seaTile = { width: canViewport.width, height: canViewport.height };
 
 let ctx = canViewport.getContext("2d");
 
+function KeyEvent() {
+  this.keyPressed = false;
+  this.available = true;
+}
+
 let leftPressed = new KeyEvent();
 let rightPressed = new KeyEvent();
 let aPressed = new KeyEvent();
@@ -14,13 +19,13 @@ let dPressed = new KeyEvent();
 let gameAssets = {
   sea: {
     name: "sea",
-    location: "sea.jpeg",
+    location: "../img/sea.jpeg",
     width: 640,
     height: 640
   },
   player: {
     name: "player",
-    location: "player.jpeg",
+    location: "../img/player.jpeg",
     width: 70,
     height: 70,
     health: 6,
@@ -28,7 +33,7 @@ let gameAssets = {
   },
   ship: {
     name: "ship",
-    location: "trade-vessel.jpeg",
+    location: "../img/trade-vessel.jpeg",
     width: 74,
     height: 74,
     health: 2,
@@ -37,7 +42,7 @@ let gameAssets = {
   },
   warship: {
     name: "warship",
-    location: "warship.jpeg",
+    location: "../img/warship.jpeg",
     width: 130,
     height: 110,
     health: 3,
@@ -46,7 +51,7 @@ let gameAssets = {
   },
   warship2: {
     name: "warship2",
-    location: "warship2.jpeg",
+    location: "../img/warship2.jpeg",
     width: 200,
     height: 75,
     health: 4,
@@ -55,43 +60,43 @@ let gameAssets = {
   },
   cannonball: {
     name: "cannonball",
-    location: "cannonball.jpeg",
+    location: "../img/cannonball.jpeg",
     width: 20,
     height: 20
   },
   explosion: {
     name: "cannonball",
-    location: "explosion.jpeg",
+    location: "../img/explosion.jpeg",
     width: 20,
     height: 20
   },
   smoke: {
     name: "smoke",
-    location: "smoke.jpeg",
+    location: "../img/smoke.jpeg",
     width: 80,
     height: 80
   },
   shipwreck: {
     name: "shipwreck",
-    location: "shipwreck.jpeg",
+    location: "../img/shipwreck.jpeg",
     width: 87,
     height: 52
   },
   shipwreck2: {
     name: "shipwreck2",
-    location: "shipwreck.jpeg",
+    location: "../img/shipwreck.jpeg",
     width: 100,
     height: 65
   },
   shipwreck3: {
     name: "shipwreck3",
-    location: "shipwreck.jpeg",
+    location: "../img/shipwreck.jpeg",
     width: 160,
     height: 100
   },
   chest: {
     name: "chest",
-    location: "chest.jpeg",
+    location: "../img/chest.jpeg",
     width: 239,
     height: 191
   }

@@ -35,7 +35,7 @@ body {
   justify-content: center;
 }
 body #start-screen {
-  background-image: url("start-background.jpeg");
+  background-image: url("../img/start-background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -72,6 +72,10 @@ body .canvas-wrapper #top-row #health-container img {
   width: 30px;
   user-select: none;
 }
+body .canvas-wrapper #top-row #golden-letter {
+  color: gold;
+  transform: scale(1.3);
+}
 body .canvas-wrapper #top-row .score {
   font-family: "Lobster", cursive;
   font-size: 2rem;
@@ -93,7 +97,7 @@ body .canvas-wrapper .game-over-background #game-over {
   align-items: center;
   flex-direction: column;
   margin: 40px;
-  background-image: url("wooden-background.jpeg");
+  background-image: url("../img/wooden-background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -103,11 +107,6 @@ body .canvas-wrapper .game-over-background #game-over p {
 }
 body .canvas-wrapper .game-over-background #game-over h2 {
   font-size: 5rem;
-}
-
-.golden-letter {
-  color: gold !important;
-  transform: scale(1.3);
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -87,7 +87,6 @@ function chooseShipType() {
   if (random < warshipSpawningChance) {
     random = Math.floor(Math.random() * Math.floor(100));
     if (random < capitalShipSpawningChance) {
-      console.log("CREATE WARSHIP2");
       return new Warship(gameAssets.warship2);
     } else {
       return new Warship(gameAssets.warship);
