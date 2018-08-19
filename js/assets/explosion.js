@@ -1,7 +1,7 @@
 function Explosion(asset, pos) {
   GameAsset.call(this, asset);
-  this.sourceFrameX = 0; //rows
-  this.sourceFrameY = 0; //columns
+  this.sourceFrameX = 0; //rows of sprite collection
+  this.sourceFrameY = 0; //columns of sprite collection
   this.sourceFrameWidth = 127;
   this.sourceFrameHeight = 127;
   this.width = 40;

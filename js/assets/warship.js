@@ -3,6 +3,7 @@ function Warship(asset) {
   this.speed = asset.speed;
   this.canShoot = true;
   this.shootingRange = 250;
+  this.cooldownTime = 800;
 }
 
 Warship.prototype = Object.create(Ship.prototype);
@@ -57,13 +58,14 @@ Warship.prototype.fire = function(shootingDirection) {
   this.shotCooldown();
 };
 
+//ships can only shoot after the cooldown period runs out.
 Warship.prototype.shotCooldown = function() {
   this.canShoot = false;
   setTimeout(
     function() {
       this.canShoot = true;
     }.bind(this),
-    800
+    cooldownTime
   );
 };
 

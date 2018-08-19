@@ -7,7 +7,7 @@ function displayScore() {
 function increaseScore(gold) {
   playerScore += gold;
   displayScore();
-  $(".score").attr("id", "golden-letter");
+  $(".score").attr("id", "golden-letter"); //when the score increases, show golden letter animation for the score
 
   setTimeout(() => {
     $(".score").removeAttr("id");

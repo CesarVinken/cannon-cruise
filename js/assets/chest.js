@@ -17,6 +17,7 @@ Chest.prototype.create = function() {
 
   chests.push(this);
 
+  //time out to destroy the chest after some time
   setTimeout(
     function() {
       chests.forEach((chest, index) => {
@@ -28,6 +29,7 @@ Chest.prototype.create = function() {
     18000
   );
 
+  //time out to display a flashing effect before the chest is finally destroyed
   setTimeout(
     function() {
       flasher = setInterval(
@@ -76,6 +78,7 @@ Chest.prototype.draw = function() {
   ctx.restore();
 };
 
+//chests spawn randomly in the top-left, top-right, bottom-left or bottom-right of the destroyed ship
 Chest.prototype.setChestPos = function() {
   let randomX = Math.floor(Math.random() * Math.floor(2));
   if (randomX === 0) randomX = -1;

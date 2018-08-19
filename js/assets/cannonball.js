@@ -33,7 +33,7 @@ Cannonball.prototype.create = function() {
   );
 
   setTimeout(
-    //time outs for fading effects
+    //time outs to gradually fade out cannonballs
     function() {
       cannonballs.forEach((ball, index) => {
         if (ball == this) {
@@ -90,6 +90,7 @@ Cannonball.prototype.draw = function() {
   if (this.isHalfFaded) ctx.globalAlpha -= 0.4;
   if (this.isFaded) ctx.globalAlpha -= 0.3;
 
+  //firingh will draw three cannonballs next to each other shot at the target
   ctx.drawImage(
     this.img,
     this.pos.x - this.parentShip.width / 8 - Math.cos(this.rotation) * 12,

@@ -21,10 +21,10 @@ function PirateText(text) {
   );
 }
 
+//generic method to spawn a Pirate Text next to the player after a certain event has occured.
 PirateText.prototype.draw = function() {
   this.xCounter += 0.2;
   this.yCounter += 0.1;
-  //ctx.font = "17px 'Patua One'";
   ctx.font = "17px Bitter";
   ctx.fillStyle = "#D3D3D3";
   ctx.fillText(

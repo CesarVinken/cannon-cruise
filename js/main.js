@@ -1,20 +1,7 @@
 let debug = false;
 
-let canViewport = document.getElementById("canvas");
-
-let seaTile = { width: canViewport.width, height: canViewport.height };
-
-let ctx = canViewport.getContext("2d");
-
-function KeyEvent() {
-  this.keyPressed = false;
-  this.available = true;
-}
-
-let leftPressed = new KeyEvent();
-let rightPressed = new KeyEvent();
-let aPressed = new KeyEvent();
-let dPressed = new KeyEvent();
+const canViewport = document.getElementById("canvas");
+const ctx = canViewport.getContext("2d");
 
 let gameAssets = {
   sea: {
@@ -101,21 +88,25 @@ let gameAssets = {
     height: 191
   }
 };
-let backgrounds = [];
-let ships = [];
-let cannonballs = [];
-let explosions = [];
-let smokeClouds = [];
-let shipwrecks = [];
-let chests = [];
+
+let backgrounds = [],
+  ships = [],
+  cannonballs = [],
+  explosions = [],
+  smokeClouds = [],
+  shipwrecks = [],
+  chests = [];
 
 let sprites = {};
+const seaTile = { width: canViewport.width, height: canViewport.height };
+
 let requestedFrame;
 
 $("#start-screen button").click(function() {
   newGame();
   $("#start-screen").hide();
 });
+
 function newGame() {
   $(".canvas-wrapper").show();
 
@@ -142,6 +133,7 @@ function setDefaultValues() {
   capitalShipSpawningChance = 0;
 }
 
+//every game loop, draw and move all assets
 let gameLoop = function loop() {
   ctx.clearRect(0, 0, canViewport.width, canViewport.height);
 
@@ -159,8 +151,8 @@ let gameLoop = function loop() {
     sprites.player.update();
   }
 
-  //move ships
   ships.forEach((ship, index) => {
+    //remove ships that are too far away from the player
     if (ship.distanceToPlayer > 700) {
       ship.remove(index);
       setupShipsOutsideViewport(1);
@@ -200,31 +192,3 @@ let gameLoop = function loop() {
 
   requestedFrame = requestAnimationFrame(gameLoop);
 };
-
-function keyDownHandler(event) {
-  if (event.keyCode == 39) {
-    rightPressed.keyPressed = true;
-  } else if (event.keyCode == 37) {
-    leftPressed.keyPressed = true;
-  } else if (event.keyCode == 65) {
-    if (aPressed.available) {
-      aPressed.keyPressed = true;
-    }
-  } else if (event.keyCode == 68) {
-    if (dPressed.available) {
-      dPressed.keyPressed = true;
-    }
-  }
-}
-
-function keyUpHandler(event) {
-  if (event.keyCode == 39) {
-    rightPressed.keyPressed = false;
-  } else if (event.keyCode == 37) {
-    leftPressed.keyPressed = false;
-  } else if (event.keyCode == 65) {
-    aPressed.keyPressed = false;
-  } else if (event.keyCode == 68) {
-    dPressed.keyPressed = false;
-  }
-}

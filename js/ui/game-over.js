@@ -19,6 +19,6 @@ function gameOver() {
 function restartGame() {
   $("#game-over-wrapper").removeClass("game-over-background");
   $("#game-over-wrapper").html("");
-  window.cancelAnimationFrame(requestedFrame);
+  window.cancelAnimationFrame(requestedFrame); //this line is needed to break the current game loop. Otherwise, the restarted game will play at double speed.
   newGame();
 }

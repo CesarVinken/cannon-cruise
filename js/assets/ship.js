@@ -13,7 +13,6 @@ Ship.prototype = Object.create(GameAsset.prototype);
 Ship.prototype.constructor = Ship;
 
 Ship.prototype.create = function() {
-  // console.log("ship created");
   ships.push(this);
 
   this.checkRoute = setInterval(
@@ -214,6 +213,7 @@ Ship.prototype.draw = function() {
   ctx.restore();
 };
 
+//in debug mode, this function draws the collision detection area in front of the ship
 Ship.prototype.drawFrontTriangle = function() {
   let center = this.getBottomCenter();
   let top = {
@@ -314,6 +314,7 @@ Ship.prototype.checkShipsInFront = function() {
   }
 };
 
+//ships are forced to rotate to avoid collision, or when they plot a new course
 Ship.prototype.forceRotate = function(angles) {
   ctx.save();
   ctx.translate(this.pos.x + this.width / 2, this.pos.y + this.height / 2);

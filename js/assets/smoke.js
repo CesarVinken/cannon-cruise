@@ -6,8 +6,6 @@ function Smoke(asset, pos) {
   this.sourceFrameWidth = 51.2;
   this.sourceFrameHeight = 51.2;
   this.pos = {
-    //  x: pos.x - this.width / 2,
-    //  y: pos.y - this.height / 2
     x: pos.x,
     y: pos.y
   };

@@ -3,7 +3,6 @@ function Player(asset) {
   this.rotation = -Math.PI / 2;
   this.speed = asset.speed;
   this.health = asset.health;
-  //this.health = 2;
   this.canShoot = true;
   this.isDead = false;
 

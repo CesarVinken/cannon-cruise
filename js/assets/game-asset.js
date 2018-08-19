@@ -1,3 +1,4 @@
+//this is the base class for all assets such as ships and chests
 function GameAsset(asset) {
   this.name = asset.name;
   this.width = asset.width;

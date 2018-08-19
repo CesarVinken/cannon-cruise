@@ -7,6 +7,7 @@ let destroyedShips = 0;
 const maxShipPop = 11;
 
 function drawBackground() {
+  //if the player gets close to the border of the 9 drawn tiles, move the row furthest away in front of the player, creating the illusion of an endless sea.
   if (
     sprites.player.pos.y <
     currentMapUpperY + gameAssets.sea.height / 2 + sprites.player.height
@@ -72,9 +73,10 @@ function drawBackground() {
   });
 }
 
+//if there are not enough ships on the map, the ship population will slowly grow back to maxShipPop
 function checkMapPopulation() {
   setInterval(function() {
-    console.log("check ship population. Ship population is " + ships.length);
+    //console.log("check ship population. Ship population is " + ships.length);
     if (ships.length < maxShipPop) {
       setupShipsOutsideViewport(1);
     }
@@ -96,6 +98,7 @@ function chooseShipType() {
   }
 }
 
+//as the player sinks more ships, the chances for the spawning of stronger ships increase
 function handleSpawningChances() {
   if (destroyedShips >= 8) {
     warshipSpawningChance = 95;
